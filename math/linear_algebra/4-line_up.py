@@ -3,7 +3,9 @@
 
 
 def add_arrays(arr1, arr2):
-    """returns sum of two matrix"""
-    add = [[arr1[i][j]+arr2[i][j]
-            for i in range(arr1[0])] for j in range(arr1)]
-    return add
+    """returns sum of two matrices"""
+    if len(arr1) != len(arr2):
+        return None
+    else:
+        result = [arr1[i] + arr2[i] for i in range(len(arr1))]
+        return result
