@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""Get shape of array."""
+
+
 def matrix_shape(matrix):
     """recursive method:
 def matrix_shape(matrix):
