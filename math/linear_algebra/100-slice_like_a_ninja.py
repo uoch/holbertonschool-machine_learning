@@ -20,8 +20,6 @@ def np_slice(matrix, axes={}):
                 start, stop, step = slice_value[0], slice_value[1], None
             else:
                 start, stop, step = slice_value
-        if start is None:
-            start = 1
         slices = []
         for i in range(len(shape)):
             if i == axis:
