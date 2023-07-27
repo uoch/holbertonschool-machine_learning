@@ -3,15 +3,16 @@
 
 
 def np_slice(matrix, axes={}):
-    import numpy as np
     """Slice a matrix along specific axes."""
+    import numpy as np
 
     x = matrix.copy()
     shape = np.shape(matrix)
 
     for axis, slice_value in axes.items():
         if isinstance(slice_value, slice):
-            start, stop, step = slice_value.start, slice_value.stop, slice_value.step
+            start, stop = slice_value.start, slice_value.stop
+            step = slice_value.step
         else:  # Assume slice_value is a tuple
             if len(slice_value) == 1:
                 start, stop, step = slice_value[0], None, None
@@ -19,6 +20,8 @@ def np_slice(matrix, axes={}):
                 start, stop, step = slice_value[0], slice_value[1], None
             else:
                 start, stop, step = slice_value
+        if start is None:
+            start = 1
         slices = []
         for i in range(len(shape)):
             if i == axis:
