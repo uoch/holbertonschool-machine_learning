@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """that performs matrix multiplication"""
-import numpy as np
 
 
 def np_slice(matrix, axes={}):
+    import numpy as np
     """Slice a matrix along specific axes."""
 
     x = matrix.copy()
