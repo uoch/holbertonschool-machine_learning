@@ -3,6 +3,7 @@
 
 
 def matrix_shape(matrix):
+    """that performs matrix multiplication"""
     shape = []
     while isinstance(matrix, list):
         shape.append(len(matrix))
@@ -26,7 +27,7 @@ def add_matrices(mat1, mat2):
     shape2 = matrix_shape(mat2)
     if shape1 != shape2:
         return None
-    elif len(shape1)<= 2:
+    elif len(shape1) <= 2:
         # Initialize the result list
         Badd = []
         for i in range(len(shape1)):
@@ -39,4 +40,4 @@ def add_matrices(mat1, mat2):
 
         return Badd
     else:
-        return [1,1,1,1,1,1,1,1,1,1]
+        return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
