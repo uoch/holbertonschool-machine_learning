@@ -27,7 +27,7 @@ def add_matrices(mat1, mat2):
     shape2 = matrix_shape(mat2)
     if shape1 != shape2:
         return None
-    elif len(shape1) <= 3:
+    elif len(shape1) <= 2:
         # Initialize the result list
         Badd = []
         for i in range(len(shape1)):
