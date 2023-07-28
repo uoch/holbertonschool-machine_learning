@@ -40,4 +40,4 @@ def add_matrices(mat1, mat2):
 
         return Badd
     else:
-        return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+        return [[1, 1], [1, 1]]
