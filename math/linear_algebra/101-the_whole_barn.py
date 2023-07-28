@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """that adds two matrices"""
+import numpy as np
 
 
 def add_matrices(mat1, mat2):
-    import numpy as np
     """adds two matrices"""
     x = np.array(mat1)
     y = np.array(mat2)
