@@ -3,6 +3,5 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 y = np.arange(0, 11) ** 3
-print(y)
-plt.plot(y)
+plt.plot(y, color='red')
 plt.show()
