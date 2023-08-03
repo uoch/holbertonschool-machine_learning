@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""hat calculates \sum_{i=1}^{n} i^2:"""
+"""hat calculates"""
 
 
 def summation_i_squared(n):
