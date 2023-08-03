@@ -4,7 +4,4 @@
 
 def summation_i_squared(n):
     """square"""
-    x = 0
-    for i in range(1, n+1):
-        x += i**2
-    return x
+    return (n * (n + 1) * (2 * n + 1)) // 6
