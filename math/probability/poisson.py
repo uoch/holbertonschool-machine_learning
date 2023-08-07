@@ -52,6 +52,5 @@ class Poisson:
         if k < 0:
             return 0
 
-        p = (Poisson.power(self.e, -self.lambtha) *
-             Poisson.power(self.lambtha, k)) / Poisson.factorial(k)
+        p = ((self.lambtha ** k) * (self.e ** (-self.lambtha)))  / Poisson.factorial(k)
         return p
