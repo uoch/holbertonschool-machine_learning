@@ -55,3 +55,13 @@ class Poisson:
         p = ((self.lambtha ** k) * (self.e ** (-self.lambtha))) / \
             Poisson.factorial(k)
         return p
+
+    def cdf(self, k):
+        """cdf function"""
+        k = int(k)
+        if k < 0:
+            return 0
+        x = 0.0
+        for i in range(k+1):
+            x += self.pmf(i)
+        return x
