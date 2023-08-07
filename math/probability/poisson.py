@@ -13,7 +13,7 @@ class Poisson:
         else:
             if not isinstance(data, list):
                 raise ValueError("data must be a list")
-            elif len(data) < 1:
+            elif len(data) <= 1:
                 raise ValueError("data must contain multiple values")
             else:
                 s = sum(data)
