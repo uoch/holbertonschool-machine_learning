@@ -11,7 +11,10 @@ class Poisson:
             if lambtha <= 0.0:
                 raise ValueError("lambtha must be a positive value")
         else:
-            if not isinstance(data, list) or len(data) <= 1:
+            if not isinstance(data, list):
+                raise ValueError("data must be a list")
+            elif len(data) < 1:
                 raise ValueError("data must contain multiple values")
-            s = sum(data)
-            self.lambtha = float(s) / len(data)
+            else:
+                s = sum(data)
+                self.lambtha = float(s) / len(data)
