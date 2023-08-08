@@ -20,3 +20,15 @@ class Normal:
             num = [(data[i]-self.mean)**2 for i in range(len(data))]
             den = len(data)
             self.stddev = (sum(num)/den)**0.5
+
+    def z_score(self, x):
+        """z_score"""
+        z = x- self.mean 
+        zs = z/self.stddev
+        return zs
+
+    def x_value(self, z):
+        """x_value"""
+        zs = z*self.stddev
+        x = self.mean + zs
+        return x
