@@ -18,5 +18,5 @@ class Normal:
                 raise ValueError("data must contain multiple values")
             self.mean = sum(data)/len(data)
             num = [(data[i]-self.mean)**2 for i in range(len(data))]
-            den = len(data)-1
+            den = len(data)
             self.stddev = (sum(num)/den)**0.5
