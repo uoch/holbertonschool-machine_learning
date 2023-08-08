@@ -38,11 +38,12 @@ class Normal:
     def pdf(self, x):
         """pdf"""
         l = 1/(self.stddev*((self.π*2)**0.5))
-        r = self.e**(((x-self.mean)**2)/((self.stddev**2)*2))
+        r = self.e**((-(x-self.mean)**2)/((self.stddev**2)*2))
         pf = l*r
         return pf
 
     def erf(self, x):
+        """erreur function"""
         l = 2/((self.π)**0.5)
         r = x - ((x**3)/3) + ((x**5)/10)-((x**7)/42)+((x**9)/216)
         return l*r
