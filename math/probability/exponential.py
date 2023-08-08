@@ -21,6 +21,7 @@ class Exponential:
             self.lambtha = len(data)/float(s)
 
     def pdf(self, x):
+        """probability density function"""
         if x < 0.0:
             return 0
         pf = self.lambtha*(self.e**(-self.lambtha*x))
