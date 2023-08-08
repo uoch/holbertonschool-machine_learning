@@ -37,19 +37,19 @@ class Normal:
 
     def pdf(self, x):
         """pdf"""
-        l = 1/(self.stddev*((self.π*2)**0.5))
+        le = 1/(self.stddev*((self.π*2)**0.5))
         r = self.e**((-(x-self.mean)**2)/((self.stddev**2)*2))
-        pf = l*r
+        pf = le*r
         return pf
 
     def erf(self, x):
         """erreur function"""
-        l = 2/((self.π)**0.5)
+        le = 2/((self.π)**0.5)
         r = x - ((x**3)/3) + ((x**5)/10)-((x**7)/42)+((x**9)/216)
-        return l*r
+        return le*r
 
     def cdf(self, x):
-        """cdf"""
+        """cumulative density function"""
         X = (x - self.mean)/((2**0.5)*self.stddev)
         cf = (1/2)*(1 + self.erf(X))
         return cf
