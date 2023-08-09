@@ -3,6 +3,7 @@
 
 
 class Binomial:
+    """Binomial distribution"""
     @staticmethod
     def factorial(x):
         """returns the factorial of x"""
@@ -17,9 +18,9 @@ class Binomial:
         if data is None:
             self.n = int(n)
             self.p = float(p)
-            if self.n < 0:
+            if self.n <= 0:
                 raise ValueError("n must be a positive value")
-            if self.p < 0 or self.p > 1:
+            if self.p <= 0 or self.p >= 1:
                 raise ValueError(" p must be greater than 0 and less than 1")
         else:
             if not isinstance(data, list):
