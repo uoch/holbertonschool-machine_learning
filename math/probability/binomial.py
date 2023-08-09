@@ -38,3 +38,14 @@ class Binomial:
             self.p = (mean_data - v_square) / mean_data
             self.n = round(mean_data/self.p)
             self.p = mean_data / self.n
+
+    def pmf(self, k):
+        """probability mass function"""
+
+        if k < 0:
+            raise ValueError("k must be a positive value")
+        x = int(k)
+        c = Binomial.factorial(
+            self.n)/((Binomial.factorial(x)*Binomial.factorial(self.n-x)))
+        pf = c * (self.p**x)*((1-self.p)**(self.n-x))
+        return pf
