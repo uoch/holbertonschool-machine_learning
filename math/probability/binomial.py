@@ -49,3 +49,12 @@ class Binomial:
             self.n)/((Binomial.factorial(x)*Binomial.factorial(self.n-x)))
         pf = c * (self.p**x)*((1-self.p)**(self.n-x))
         return pf
+
+    def cdf(self, k):
+        """cumulative distribution function"""
+
+        if k < 0:
+            return 0
+        x = int(k)
+        c = [self.pmf(i) for i in range(x+1)]
+        return sum(c)
