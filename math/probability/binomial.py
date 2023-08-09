@@ -43,7 +43,7 @@ class Binomial:
         """probability mass function"""
 
         if k < 0:
-            return 0 
+            return 0
         x = int(k)
         c = Binomial.factorial(
             self.n)/((Binomial.factorial(x)*Binomial.factorial(self.n-x)))
