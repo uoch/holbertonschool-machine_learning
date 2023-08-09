@@ -31,6 +31,7 @@ class Binomial:
             self.p = sum(data) / (len(data) * max(data))
 
             # Estimate n from the data using the mean and p
+            # mean = np , v_square = np(1-p)
             mean_data = sum(data)/(len(data))
             sum_data = [(data[i]**2 - mean_data**2) for i in range(len(data))]
             v_square = sum(sum_data)/len(sum_data)
