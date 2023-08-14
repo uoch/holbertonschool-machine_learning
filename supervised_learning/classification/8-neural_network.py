@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """neural network performing binary classification"""
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class NeuralNetwork:
