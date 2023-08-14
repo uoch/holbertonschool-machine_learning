@@ -4,7 +4,7 @@ import numpy as np
 
 
 class Neuron:
-    """single neuron performing binary classification"""
+    """binary classification"""
 
     def __init__(self, nx):
         """nx is the number of input features to the neuron"""
