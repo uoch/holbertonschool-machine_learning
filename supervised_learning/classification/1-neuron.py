@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-import numpy as np
 """single neuron performing binary classification"""
+import numpy as np
 
 
 class Neuron:
@@ -20,9 +20,10 @@ class Neuron:
     def W(self):
         return self.__W
 
-    def A(self):
-        return self.__A
-
     @property
     def b(self):
         return self.__b
+
+    @property
+    def A(self):
+        return self.__A
