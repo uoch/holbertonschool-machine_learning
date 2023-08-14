@@ -41,8 +41,10 @@ class Neuron:
                           )  # -(ylog(A) + (1-y)log(1.0000001-A)))
         cost_function = 1 / Y.shape[1] * np.sum(loss_function)
         return cost_function
+
     def evaluate(self, X, Y):
         """evaluate the neuron"""
         a = self.forward_prop(X)
+        aa = np.where(a >= 0.5, 1, 0)
         cost = self.cost(Y, a)
-        return a, cost
+        return aa, cost
