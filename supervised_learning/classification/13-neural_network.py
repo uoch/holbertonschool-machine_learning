@@ -77,21 +77,17 @@ class NeuralNetwork:
         dZ2 = A2 - Y
 
         dW2 = one_by_m*(np.matmul(dZ2, A1.T))
-        self.__W2 -= alpha*dW2
-        db2 = one_by_m*np.sum(dZ2)
 
         db2 = one_by_m*np.sum(dZ2, axis=1, keepdims=True)
-        self.__b2 -= alpha*db2
 
         # dZ1 = (W2.T * dZ2) * (A1 * (1 - A1))
-        dZ1 = np.matmul(self.__W2.T, dZ2) * (A1 * (1 - A1))
-
+        dZ1 = np.matmul(self.W2.T, dZ2) * (A1 * (1-A1))
         dW1 = one_by_m*np.matmul(dZ1, X.T)  # dW1 = (1/m) * (dZ1 * X.T)
-        self.__W1 -= alpha*dW1
-        db1 = one_by_m * np.sum(dZ1)  # db1 = (1/m) * sum(dZ1)
 
         # db1 = (1/m) * sum(dZ1)
         db1 = one_by_m * np.sum(dZ1, axis=1, keepdims=True)
+        self.__W2 -= alpha*dW2
+        self.__b2 -= alpha*db2
+        self.__W1 -= alpha*dW1
         self.__b1 -= alpha*db1
-
         return self.__W1, self.__b1, self.__W2, self.__b2
