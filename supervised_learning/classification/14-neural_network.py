@@ -103,6 +103,6 @@ class NeuralNetwork:
         if alpha < 0:
             raise ValueError("alpha must be positive")
         for i in range(iterations):
-            A1,A2 = self.forward_prop(X)
+            A1, A2 = self.forward_prop(X)
             self.gradient_descent(X, Y, self.A1, self.A2, alpha)
         return self.evaluate(X, Y)
