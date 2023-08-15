@@ -73,11 +73,12 @@ class NeuralNetwork:
 
     def gradient_descent(self, X, Y, A1, A2, alpha=0.05):
         """gradien descent"""
-        one_by_m = X.shape[1]
+        one_by_m = 1/X.shape[1]
         dZ2 = A2 - Y
 
         dW2 = one_by_m*(np.matmul(dZ2, A1.T))
         self.__W2 -= alpha*dW2
+        db2 = one_by_m*np.sum(dZ2)
 
         db2 = one_by_m*np.sum(dZ2, axis=1, keepdims=True)
         self.__b2 -= alpha*db2
@@ -87,6 +88,7 @@ class NeuralNetwork:
 
         dW1 = one_by_m*np.matmul(dZ1, X.T)  # dW1 = (1/m) * (dZ1 * X.T)
         self.__W1 -= alpha*dW1
+        db1 = one_by_m * np.sum(dZ1)  # db1 = (1/m) * sum(dZ1)
 
         # db1 = (1/m) * sum(dZ1)
         db1 = one_by_m * np.sum(dZ1, axis=1, keepdims=True)
