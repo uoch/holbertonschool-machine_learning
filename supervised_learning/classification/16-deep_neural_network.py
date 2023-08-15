@@ -21,10 +21,10 @@ class DeepNeuralNetwork:
         self.biases = {}  # Store bias vectors
 
         # Initialize weights and biases using He initialization
-        for l, layer_size in enumerate(layers, start=1):
+        for L, layer_size in enumerate(layers, start=1):
             if not isinstance(layer_size, int):
                 raise TypeError("layers must be a list of positive integers")
             else:
-                self.weights[f"W{l}"] = np.random.randn(
-                    layer_size, nx if l == 1 else layers[l - 2]) * np.sqrt(2 / (nx if l == 1 else layers[l - 2]))
-                self.biases[f"b{l}"] = np.zeros((layer_size, 1))
+                self.weights[f"W{L}"] = np.random.normal(
+                    layer_size, nx if L == 1 else layers[L - 2]) * np.sqrt(2 / (nx if L == 1 else layers[L - 2]))
+                self.biases[f"b{L}"] = np.zeros((layer_size, 1))
