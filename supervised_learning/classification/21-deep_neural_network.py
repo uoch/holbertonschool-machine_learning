@@ -74,9 +74,6 @@ class DeepNeuralNetwork:
     def gradient_descent(self, Y, cache, alpha=0.05):
         """
         Calculates one pass of gradient descent on the neural network
-        Y: numpy.ndarray with shape (1, m) containing the correct labels
-        cache: dictionary containing intermediary values of the network
-        alpha: learning rate
         """
         one_by_m = 1 / Y.shape[1]
 
