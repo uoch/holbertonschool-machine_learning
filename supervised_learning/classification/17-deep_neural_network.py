@@ -23,17 +23,15 @@ class DeepNeuralNetwork:
                 raise TypeError("layers must be a list of positive integers")
             else:
                 if li == 0:
-                    self.__weights['W' + str(li+1)] = np.random.randn(layers[li],
-                                                                      nx) * \
-                        np.sqrt(2/nx)
+                    self.__weights['W' + str(li+1)] = np.random.randn(
+                        layers[li], nx) * np.sqrt(2/nx)
                 else:
-                    self.weights["W"+str(li+1)] = np.random.randn(layers[li],
-                                                                  layers[li-1]) * \
-                        np.sqrt(2/layers[li-1])
+                    self.weights["W"+str(li+1)] = np.random.randn(
+                        layers[li], layers[li-1]) * np.sqrt(2/layers[li-1])
                 self.__weights['b'+str(li+1)] = np.zeros((layer_size, 1))
 
         self.__L = len(layers)  # Number of layers
-        self.__cache = {}  # Store intermediate values during forward propagation
+        self.__cache = {}
 
     @property
     def weights(self):
