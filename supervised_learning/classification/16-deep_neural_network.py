@@ -19,7 +19,7 @@ class DeepNeuralNetwork:
 
         # Initialize weights and biases using He initialization
         for li, layer_size in enumerate(layers):
-            if not isinstance(layer_size, int):
+            if not isinstance(layer_size, int) or layer_size < 1:
                 raise TypeError("layers must be a list of positive integers")
             else:
                 if li == 0:
