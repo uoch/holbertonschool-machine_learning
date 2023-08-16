@@ -75,21 +75,19 @@ class DeepNeuralNetwork:
         """
         Calculates one pass of gradient descent on the neural network
         """
-        one_by_m = 1 / Y.shape[1]
+        o_m = 1/Y.shape[1]
 
-        dW = {}
-        db = {}
-        dZ = {}
+        for i in range(self.__L, 0, -1):
+            if i == self.__L:
+                dz = cache['A' + str(self.__L)] - Y  # last layer
 
-        for i in range(self.L, 0, -1):
-            if i == self.L:
-                dZ[i] = cache['A' + str(i)] - Y
-            else:
-                dZ[i] = np.matmul(self.weights['W' + str(i + 1)].T, dZ[i + 1]) * \
-                    cache['A' + str(i)] * (1 - cache['A' + str(i)])
+            ap = cache['A' + str(i - 1)]
 
-            dW[i] = one_by_m * np.matmul(dZ[i], cache['A' + str(i - 1)].T)
-            db[i] = one_by_m * np.sum(dZ[i], axis=1, keepdims=True)
+            dw = o_m * np.matmul(dz, ap.T)
+            db = o_m * np.sum(dz, axis=1, keepdims=True)
+            # dZ1 = (W2.T * dZ prevu) * (A previouse * (1 - A previouse))
+            dz = np.matmul(self.__weights['W' + str(i)].T,
+                           dz) * (ap * (1 - ap))
 
-            self.__weights['W' + str(i)] -= alpha * dW[i]
-            self.__weights['b' + str(i)] -= alpha * db[i]
+            self.__weights['W' + str(i)] -= alpha * dw
+            self.__weights['b' + str(i)] -= alpha * db
