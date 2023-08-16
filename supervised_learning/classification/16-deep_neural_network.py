@@ -27,8 +27,9 @@ class DeepNeuralNetwork:
                                                                     nx) * \
                         np.sqrt(2/nx)
                 else:
-                    self.weights["W"+str(li+1)] = np.random.randn(layers[li],
-                                                                  layers[li-1]) * \
+                    self.weights["W"+str(li+1)] = np.random.randn(
+                        layers[li],
+                        layers[li-1]) * \
                         np.sqrt(2/layers[li-1])
                 self.weights['b'+str(li+1)] = np.zeros((layer_size, 1))
 
