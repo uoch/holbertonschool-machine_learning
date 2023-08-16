@@ -15,16 +15,22 @@ class DeepNeuralNetwork:
         if not isinstance(layers, list) or len(layers) < 1:
             raise TypeError("layers must be a list of positive integers")
 
-        self.L = len(layers)  # Number of layers
-        self.cache = {}  # Store intermediate values during forward propagation
         self.weights = {}  # Store weight matrices
-        self.biases = {}  # Store bias vectors
 
         # Initialize weights and biases using He initialization
-        for L, layer_size in enumerate(layers, start=1):
+        for li, layer_size in enumerate(layers):
             if not isinstance(layer_size, int):
                 raise TypeError("layers must be a list of positive integers")
             else:
-                self.weights[f"W{L}"] = np.random.normal(
-                    layer_size, nx if L == 1 else layers[L - 2]) * np.sqrt(2 / (nx if L == 1 else layers[L - 2]))
-                self.biases[f"b{L}"] = np.zeros((layer_size, 1))
+                if li == 0:
+                    self.weights[f"W{li+1}"] = np.random.randn(layers[li],
+                                                               nx) * \
+                        np.sqrt(2/nx)
+                else:
+                    self.weights[f"W{li+1}"] = np.random.randn(layers[li],
+                                                               layers[li-1]) * \
+                        np.sqrt(2/layers[li-1])
+                self.weights[f"b{li+1}"] = np.zeros((layer_size, 1))
+
+        self.L = len(layers)  # Number of layers
+        self.cache = {}  # Store intermediate values during forward propagation
