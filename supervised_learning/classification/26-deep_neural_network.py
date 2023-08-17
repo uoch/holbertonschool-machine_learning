@@ -139,9 +139,10 @@ class DeepNeuralNetwork:
     @staticmethod
     def load(filename):
         """load the traind model from a file"""
-
-        with open(filename, 'rb')as f:
-            model = pk.load(f)
-        if not isinstance(model, DeepNeuralNetwork):
+        try:
+            with open(filename, 'rb')as f:
+                model = pk.load(f)
+            if isinstance(model, DeepNeuralNetwork):
+                return model
+        except FileNotFoundError:
             return None
-        return model
