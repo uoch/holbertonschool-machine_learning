@@ -6,6 +6,10 @@ import numpy as np
 def one_hot_decode(one_hot):
     """decode one hot matrix"""
     # Y = np.argmax(one_hot, axis=0)
+    if type(one_hot) is not np.ndarray:
+        return None
+    if len(one_hot.shape) != 2:
+        return None
     classes = one_hot.shape[0]
     m = one_hot.shape[1]
     Y = []
