@@ -3,7 +3,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pickle as pk
-one_hot_encode = __import__('24-one_hot_encode').one_hot_encode
 
 
 class DeepNeuralNetwork:
@@ -48,6 +47,17 @@ class DeepNeuralNetwork:
     def cache(self):
         return self.__cache
 
+    @staticmethod
+    def sigmoid(z):
+        a = 1.0/(1.0+np.exp(-z))
+        return a
+
+    @staticmethod
+    def softmax(z):
+        z_exp = np.exp(z - np.max(z, axis=0, keepdims=True))
+        a = z_exp / np.sum(z_exp, axis=0, keepdims=True)
+        return a
+
     def forward_prop(self, X):
         """ forward propagate using sigmoid function"""
         self.__cache['A0'] = X
@@ -56,15 +66,23 @@ class DeepNeuralNetwork:
             z = np.matmul(self.weights['W' + str(i + 1)],
                           self.__cache['A' + str(i)]) + \
                 self.__weights['b' + str(i + 1)]
-            self.__cache['A' + str(i+1)] = 1 / (1 + np.exp(-z))
+            if i == (self.__L-1):
+                self.__cache['A' + str(self.__L)
+                             ] = self.softmax(z)
+            else:
+                self.__cache['A' + str(i+1)] = self.sigmoid(z)
 
         return self.__cache['A' + str(self.__L)], self.__cache
 
     def cost(self, Y, A):
-        """function cost for logistic regression"""
+        """function cost for logistic regression
         loss_function = -((Y * np.log(A)) + ((1 - Y) * np.log(1.0000001 - A))
                           )  # -(ylog(A) + (1-y)log(1.0000001-A)))
         cost_function = 1 / Y.shape[1] * np.sum(loss_function)
+        return cost_function"""
+        # cost for softmax
+        # loss = - sum(Y * np.log(
+        cost_function = -1 / Y.shape[1] * np.sum(Y * np.log(A))
         return cost_function
 
     def evaluate(self, X, Y):
