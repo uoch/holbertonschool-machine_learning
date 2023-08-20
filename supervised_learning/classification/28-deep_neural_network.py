@@ -122,7 +122,7 @@ class DeepNeuralNetwork:
             dw = o_m * np.matmul(dz, ap.T)
             db = o_m * np.sum(dz, axis=1, keepdims=True)
             # Calculate dz based on the chosen activation function
-            # Derivation for sigmoid activation function: (A_prev * (1 - A_prev))
+            # Derivation for sig activation function: (A_prev * (1 - A_prev))
             # Derivative of tanh activation function: (1 - A_prev**2)
             if self.__activation == 'sig':
                 dz = np.matmul(self.__weights['W' + str(i)].T,
