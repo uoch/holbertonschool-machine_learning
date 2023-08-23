@@ -11,5 +11,5 @@ def calculate_accuracy(y, y_pred):
     true_false_array = tf.equal(y_pred, y)
     num_of_true = tf.reduce_sum(tf.cast(true_false_array, tf.int32))
     accuracy = num_of_true/x
-    mean_accuracy = tf.reduce_mean(accuracy, name="Mean")
+    mean_accuracy = tf.reduce_mean(accuracy, name="Mean",tf.float32)
     return mean_accuracy
