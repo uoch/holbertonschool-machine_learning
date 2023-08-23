@@ -16,11 +16,11 @@ def create_layer(prev, n, activation):
         Layer with the specified numb of units and activation function applied.
     bias are automatically computed by tensorflow."""
     # Using FAN_AVG initializer for the weights
-    weights_initializer = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
+    w = tf.contrib.layers.variance_scaling_initializer(mode="FAN_AVG")
 
     # Create the dense layer with the specified activation and units
     layer = tf.layers.Dense(
-        units=n, activation=activation, kernel_initializer=weights_initializer)
+        units=n, activation=activation, kernel_initializer=w)
 
     # Apply the layer to the previous layer or input tensor
 
