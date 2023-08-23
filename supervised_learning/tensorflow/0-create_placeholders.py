@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """tensorflow project"""
 import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+#tf.disable_v2_behavior()
 
 
 def create_placeholders(nx, classes):
