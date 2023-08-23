@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""tensorflow project"""
-# import tensorflow as tf
+"""tensorflow project
 import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+tf.disable_v2_behavior()"""
+import tensorflow as tf
 
 
 def create_layer(prev, n, activation):
