@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """tensorflow project"""
-# import tensorflow as tf
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
 
 
 def calculate_accuracy(y, y_pred):
     """Calculates the accuracy"""
-    x= tf.shape(y)[0]
+    x = tf.shape(y)[0]
     y_pred = tf.argmax(y_pred, axis=1)
     y = tf.argmax(y, axis=1)
     true_false_array = tf.equal(y_pred, y)
