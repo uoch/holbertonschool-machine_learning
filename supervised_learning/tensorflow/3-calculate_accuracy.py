@@ -13,5 +13,5 @@ def calculate_accuracy(y, y_pred):
     accuracy = num_of_true/x
     mean_accuracy = tf.reduce_mean(accuracy, name="Mean")
     rounded_accuracy = tf.round(
-        mean_accuracy * 10**decimal_places) / (10**decimal_places)
+        mean_accuracy * 10**9) / (10**9)
     return rounded_accuracy
