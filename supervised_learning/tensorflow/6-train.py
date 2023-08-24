@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""tensorflow project"""
 import tensorflow.compat.v1 as tf
 
 calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
