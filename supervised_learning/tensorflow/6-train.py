@@ -34,16 +34,16 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
         # Training loop
         for i in range(iterations + 1):
             _, cost, train_acc = sess.run([train_op, loss, accuracy],
-            feed_dict={x: X_train, y: Y_train})
+                                          feed_dict={x: X_train, y: Y_train})
 
             if i % 100 == 0 or i == 0 or i == iterations:
-                valid_cost, valid_acc = sess.run([loss, accuracy],\
-                feed_dict={x: X_valid, y: Y_valid})
+                v_cost, v_acc = sess.run([loss, accuracy],
+                                         feed_dict={x: X_valid, y: Y_valid})
                 print(f"After {i} iterations:")
                 print(f"\tTraining Cost: {cost}")
                 print(f"\tTraining Accuracy: {train_acc}")
-                print(f"\tValidation Cost: {valid_cost}")
-                print(f"\tValidation Accuracy: {valid_acc}")
+                print(f"\tValidation Cost: {v_cost}")
+                print(f"\tValidation Accuracy: {v_acc}")
 
         # Save the model
         saver.save(sess, save_path)
