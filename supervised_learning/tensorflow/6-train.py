@@ -25,19 +25,12 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
     # Create the training operation
     train_op = create_train_op(loss, alpha)
     # can you give me how i could use tf.Session()
-    tf.add_to_collection('x', x)
-    tf.add_to_collection('y', y)
-    tf.add_to_collection('y_pred', y_pred)
-    tf.add_to_collection('loss', loss)
-    tf.add_to_collection('accuracy', accuracy)
-    tf.add_to_collection('train_op', train_op)
     saver = tf.train.Saver()
     init = tf.global_variables_initializer()
     with tf.Session() as sess:
         # Initialize variables
         for i in range(iterations + 1):
             sess.run(init)
-            sess.run(train_op, feed_dict={x: X_train, y: Y_train})
             if i % 100 == 0 or i == iterations:
                 print("After {} iterations:".format(i))
                 print("\tTraining Cost: {}".format(
@@ -48,5 +41,8 @@ def train(X_train, Y_train, X_valid, Y_valid, layer_sizes, activations,
                     sess.run(loss, feed_dict={x: X_valid, y: Y_valid})))
                 print("\tValidation Accuracy: {}".format(
                     sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
+                if i < iterations:
+                    sess.run(train_op, feed_dict={x: X_train, y: Y_train})
         save_path = saver.save(sess, save_path)
+
         return save_path
