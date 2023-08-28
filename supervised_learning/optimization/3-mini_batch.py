@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Normalization Constants"""""
-import numpy as np
 import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
