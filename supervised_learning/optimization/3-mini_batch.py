@@ -7,7 +7,7 @@ shuffle_data = __import__('2-shuffle_data').shuffle_data
 def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
                      epochs=5,
                      load_path="/tmp/model.ckpt", save_path="/tmp/model.ckpt"):
-    """trains a loaded neural network model using mini-batch gradient descent"""
+    """trains a load neural network model using mini-batch gradient descent"""
     with tf.Session() as sess:
         graph = tf.train.import_meta_graph(load_path+".meta")
         saver = tf.train.Saver()
