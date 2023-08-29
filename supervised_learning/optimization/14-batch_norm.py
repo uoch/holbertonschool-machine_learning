@@ -11,9 +11,10 @@ def create_batch_norm_layer(prev, n, activation):
     tf.nn.batch_normalization
     apply the activation function to the normalized inputs
     """
+    kernal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
     layer = tf.keras.layers.Dense(
         units=n, activation=None,
-        kernel=tf.keras.initializers.VarianceScaling(mode='fan_avg'))
+        kernel_initializer=kernal)
     z = layer(prev)
     mean, variance = tf.nn.moments(z, axes=[0])
     gamma = tf.Variable(tf.constant(1.0, shape=[n]), trainable=True)
