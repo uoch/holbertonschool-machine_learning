@@ -31,8 +31,8 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
             print("\tValidation Accuracy: {}".format(valid_acc))
             X_sh, Y_sh = shuffle_data(X_train, Y_train)
             for j in range(0, len(X_train), batch_size):
-                X_bat = X_sh[j:j+batch_size, :]
-                Y_bat = Y_sh[j:j+batch_size, :]
+                X_bat = X_sh[j:j+batch_size, :]  # conserve all the columns
+                Y_bat = Y_sh[j:j+batch_size, :]  # conserve all the columns
                 _ = sess.run(train_op, feed_dict={x: X_bat, y: Y_bat})
                 if count % 100 == 0:
                     batch_cost, batch_acc = sess.run(
