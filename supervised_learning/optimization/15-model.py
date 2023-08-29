@@ -19,9 +19,7 @@ def calculate_accuracy(y, y_pred):
 
 def calculate_loss(y, y_pred):
     """Calculates the loss for a given y_pred"""
-    loss = tf.losses.softmax_cross_entropy(
-        onehot_labels=y,
-        logits=y_pred,)
+    loss = tf.losses.softmax_cross_entropy(y, y_pred,)
     return loss
 
 
@@ -61,7 +59,7 @@ def shuffle_data(X, Y):
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
     """learning rate decay operation in tensorflow using inverse time decay"""
     le = tf.train.inverse_time_decay(
-        alpha, global_step, decay_step, decay_rate, staircase=True)
+        alpha, global_step, decay_step, decay_rate)
     return le
 
 
@@ -103,7 +101,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     # create "alpha" the learning rate decay operation in tensorflow
     alpha = learning_rate_decay(alpha, decay_rate, global_step, decay_step)
     train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon, global_step)
-
+    tf.add_to_collection('train_op', train_op)
     # initizalize train_op and add it to collection
     # hint: don't forget to add global_step parameter in optimizer().minimize()
     saver = tf.train.Saver()
