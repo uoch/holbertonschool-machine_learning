@@ -65,12 +65,12 @@ def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
     return le
 
 
-def create_Adam_op(loss, alpha, beta1, beta2, epsilon):
+def create_Adam_op(loss, alpha, beta1, beta2, epsilon, global_step):
     """
     epsilon is a small number to avoid division by zero
     """
     op = tf.train.AdamOptimizer(alpha, beta1, beta2, epsilon)
-    return op.minimize(loss)
+    return op.minimize(loss, global_step)
 
 
 def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
@@ -102,7 +102,8 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     decay_step = X_train.shape[0] // batch_size
     # create "alpha" the learning rate decay operation in tensorflow
     alpha = learning_rate_decay(alpha, decay_rate, global_step, decay_step)
-    train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon)
+    train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon, global_step)
+
     # initizalize train_op and add it to collection
     # hint: don't forget to add global_step parameter in optimizer().minimize()
     saver = tf.train.Saver()
