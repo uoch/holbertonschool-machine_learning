@@ -19,28 +19,39 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32, epochs=5
         saver = tf.train.Saver()
 
         sess.run(init)
-        for i in range(epochs+1):
+        for i in range(epochs):
+            count = 1
             X_train, Y_train = shuffle_data(X_train, Y_train)
+            print("After {} epochs:".format(i))
+            print("\tTraining Cost: {}".format(
+                sess.run(loss, feed_dict={x: X_train, y: Y_train})))
+            print("\tTraining Accuracy: {}".format(
+                sess.run(accuracy, feed_dict={x: X_train, y: Y_train})))
+            print("\tValidation Cost: {}".format(
+                sess.run(loss, feed_dict={x: X_valid, y: Y_valid})))
+            print("\tValidation Accuracy: {}".format(
+                sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
             for j in range(0, X_train.shape[0], batch_size):
                 X_batch = X_train[j:j+batch_size]
                 Y_batch = Y_train[j:j+batch_size]
                 sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
-                print("\tStep {}:".format(j))
-                print("\t\tCost: {}".format(
-                    sess.run(loss, feed_dict={x: X_batch, y: Y_batch})))
-                print("\t\tAccuracy: {}".format(
-                    sess.run(accuracy, feed_dict={x: X_batch, y: Y_batch})))
-                if j % 100 == 0:
-                    print("After {} epochs::".format(i))
-                    print("\tTraining Cost: {}".format(
-                        sess.run(loss, feed_dict={x: X_train, y: Y_train})))
-                    print("\tTraining Accuracy: {}".format(
-                        sess.run(accuracy, feed_dict={x: X_train, y: Y_train})))
-                    print("\tValidation Cost: {}".format(
-                        sess.run(loss, feed_dict={x: X_valid, y: Y_valid})))
-                    print("\tValidation Accuracy: {}".format(
-                        sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
-                if i == epochs:
-                    break
-            save_path = saver.save(sess, save_path)
+                if count % 100 == 0:
+                    print("\tStep {}:".format(count))
+                    print("\t\tCost: {}".format(
+                        sess.run(loss, feed_dict={x: X_batch, y: Y_batch})))
+                    print("\t\tAccuracy: {}".format(
+                        sess.run(accuracy, feed_dict={x: X_batch, y: Y_batch})))
+                count += 1
+                # last batch
+            if i == epochs - 1:
+                print("After {} epochs:".format(epochs))
+                print("\tTraining Cost: {}".format(
+                    sess.run(loss, feed_dict={x: X_train, y: Y_train})))
+                print("\tTraining Accuracy: {}".format(
+                    sess.run(accuracy, feed_dict={x: X_train, y: Y_train})))
+                print("\tValidation Cost: {}".format(
+                    sess.run(loss, feed_dict={x: X_valid, y: Y_valid})))
+                print("\tValidation Accuracy: {}".format(
+                    sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
+        save_path = saver.save(sess, save_path)
     return save_path
