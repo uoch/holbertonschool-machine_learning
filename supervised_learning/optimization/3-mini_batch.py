@@ -17,38 +17,34 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
         accuracy = tf.get_collection("accuracy")[0]
         loss = tf.get_collection("loss")[0]
         train_op = tf.get_collection("train_op")[0]
-        init = tf.global_variables_initializer()
         saver = tf.train.Saver()
-
-        sess.run(init)
         for i in range(epochs):
             count = 1
-            cost = sess.run(loss, feed_dict={x: X_train, y: Y_train})
-            train_acc = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
-            valid_cost = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
-            valid_acc = sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
+            cost, train_acc = sess.run((loss, accuracy), feed_dict={
+                                       x: X_train, y: Y_train})
+            valid_cost, valid_acc = sess.run(
+                (loss, accuracy), feed_dict={x: X_valid, y: Y_valid})
             print("After {} epochs:".format(i))
             print("\tTraining Cost: {}".format(cost))
             print("\tTraining Accuracy: {}".format(train_acc))
             print("\tValidation Cost: {}".format(valid_cost))
             print("\tValidation Accuracy: {}".format(valid_acc))
             X_sh, Y_sh = shuffle_data(X_train, Y_train)
-            for j in range(0, X_train.shape[0], batch_size):
-                X_bat = X_sh[j:j+batch_size]
-                Y_bat = Y_sh[j:j+batch_size]
-                sess.run(train_op, feed_dict={x: X_bat, y: Y_bat})
+            for j in range(0, len(X_train), batch_size):
+                X_bat = X_sh[j:j+batch_size, ]
+                Y_bat = Y_sh[j:j+batch_size, ]
+                _ = sess.run(train_op, feed_dict={x: X_bat, y: Y_bat})
                 if count % 100 == 0:
-                    batch_cost = sess.run(loss, feed_dict={x: X_bat, y: Y_bat})
-                    batch_acc = sess.run(accuracy, feed_dict={
-                                         x: X_bat, y: Y_bat})
+                    batch_cost, batch_acc = sess.run(
+                        (loss, accuracy), feed_dict={x: X_bat, y: Y_bat})
                     print("\tStep {}:".format(count))
                     print("\t\tCost: {}".format(batch_cost))
                     print("\t\tAccuracy: {}".format(batch_acc))
                 count += 1
-        cost_f = sess.run(loss, feed_dict={x: X_train, y: Y_train})
-        train_acc_f = sess.run(accuracy, feed_dict={x: X_train, y: Y_train})
-        valid_cost_f = sess.run(loss, feed_dict={x: X_valid, y: Y_valid})
-        valid_acc_f = sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})
+        cost_f, train_acc_f = sess.run((loss, accuracy), feed_dict={
+                                       x: X_train, y: Y_train})
+        valid_cost_f, valid_acc_f = sess.run(
+            (loss, accuracy), feed_dict={x: X_valid, y: Y_valid})
         print("After {} epochs:".format(epochs))
         print("\tTraining Cost: {}".format(cost_f))
         print("\tTraining Accuracy: {}".format(train_acc_f))
