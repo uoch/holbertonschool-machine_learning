@@ -4,7 +4,9 @@ import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
-def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32, epochs=5, load_path="/tmp/model.ckpt", save_path="/tmp/model.ckpt"):
+def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32,
+                     epochs=5,
+                     load_path="/tmp/model.ckpt", save_path="/tmp/model.ckpt"):
     """trains a loaded neural network model using mini-batch gradient descent"""
     with tf.Session() as sess:
         graph = tf.train.import_meta_graph(load_path+".meta")
@@ -32,15 +34,15 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32, epochs=5
                 sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
             X_sh, Y_sh = shuffle_data(X_train, Y_train)
             for j in range(0, X_train.shape[0], batch_size):
-                X_batch = X_sh[j:j+batch_size]
-                Y_batch = Y_sh[j:j+batch_size]
-                sess.run(train_op, feed_dict={x: X_batch, y: Y_batch})
+                X_bat = X_sh[j:j+batch_size]
+                Y_bat = Y_sh[j:j+batch_size]
+                sess.run(train_op, feed_dict={x: X_bat, y: Y_bat})
                 if count % 100 == 0:
                     print("\tStep {}:".format(count))
                     print("\t\tCost: {}".format(
-                        sess.run(loss, feed_dict={x: X_batch, y: Y_batch})))
+                        sess.run(loss, feed_dict={x: X_bat, y: Y_bat})))
                     print("\t\tAccuracy: {}".format(
-                        sess.run(accuracy, feed_dict={x: X_batch, y: Y_batch})))
+                        sess.run(accuracy, feed_dict={x: X_bat, y: Y_bat})))
                 count += 1
         print("After {} epochs:".format(epochs))
         print("\tTraining Cost: {}".format(
