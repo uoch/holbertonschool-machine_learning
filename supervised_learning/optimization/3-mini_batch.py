@@ -42,16 +42,14 @@ def train_mini_batch(X_train, Y_train, X_valid, Y_valid, batch_size=32, epochs=5
                     print("\t\tAccuracy: {}".format(
                         sess.run(accuracy, feed_dict={x: X_batch, y: Y_batch})))
                 count += 1
-                # last batch
-            if i == epochs - 1:
-                print("After {} epochs:".format(epochs))
-                print("\tTraining Cost: {}".format(
-                    sess.run(loss, feed_dict={x: X_train, y: Y_train})))
-                print("\tTraining Accuracy: {}".format(
-                    sess.run(accuracy, feed_dict={x: X_train, y: Y_train})))
-                print("\tValidation Cost: {}".format(
-                    sess.run(loss, feed_dict={x: X_valid, y: Y_valid})))
-                print("\tValidation Accuracy: {}".format(
-                    sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
+        print("After {} epochs:".format(epochs))
+        print("\tTraining Cost: {}".format(
+            sess.run(loss, feed_dict={x: X_train, y: Y_train})))
+        print("\tTraining Accuracy: {}".format(
+            sess.run(accuracy, feed_dict={x: X_train, y: Y_train})))
+        print("\tValidation Cost: {}".format(
+            sess.run(loss, feed_dict={x: X_valid, y: Y_valid})))
+        print("\tValidation Accuracy: {}".format(
+            sess.run(accuracy, feed_dict={x: X_valid, y: Y_valid})))
         save_path = saver.save(sess, save_path)
     return save_path
