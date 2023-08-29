@@ -34,7 +34,7 @@ def create_batch_norm_layer(prev, n, activation):
         units=n, activation=None,
         kernel_initializer=kernal)
     z = layer(prev)
-    if activation == None:
+    if activation is None:
         return z
     mean, variance = tf.nn.moments(z, axes=[0])
     gamma = tf.Variable(tf.constant(1.0, shape=[n]), trainable=True)
@@ -53,7 +53,7 @@ def forward_prop(prev, layers, activations, epsilon):
 
 
 def shuffle_data(X, Y):
-    # fill the function
+    """fill the function"""
     ind = np.random.permutation(len(X))
     return X[ind], Y[ind]
 
@@ -125,7 +125,6 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
             # shuffle data
             X_sh, Y_sh = shuffle_data(X_train, Y_train)
             for j in range(0, X_train.shape[0], batch_size):
-                # get X_batch and Y_batch from X_train shuffled and Y_train shuffled
                 X_bat = X_sh[j:j+batch_size, :]  # conserve all the columns
                 Y_bat = Y_sh[j:j+batch_size, :]  # conserve all the columns
                 sess.run(train_op, feed_dict={
