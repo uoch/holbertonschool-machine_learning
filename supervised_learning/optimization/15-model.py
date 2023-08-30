@@ -19,7 +19,7 @@ def calculate_accuracy(y, y_pred):
 
 def calculate_loss(y, y_pred):
     """Calculates the loss for a given y_pred"""
-    loss = tf.losses.softmax_cross_entropy(y, y_pred,)
+    loss = tf.losses.softmax_cross_entropy(y, y_pred)
     return loss
 
 
@@ -29,7 +29,7 @@ def create_batch_norm_layer(prev, n, activation):
     """
     kernal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
     layer = tf.keras.layers.Dense(
-        units=n, activation= activation,
+        units=n, activation=activation,
         kernel_initializer=kernal)
     z = layer(prev)
     if activation is None:
@@ -60,9 +60,12 @@ def shuffle_data(X, Y):
 
 
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
-    """learning rate decay operation in tensorflow using inverse time decay"""
+    """
+    alpha is the original learning rate
+    """
+
     le = tf.train.inverse_time_decay(
-        alpha, global_step, decay_step, decay_rate)
+        alpha, global_step, decay_step, decay_rate, staircase=True)
     return le
 
 
@@ -77,42 +80,32 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon, global_step):
 def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
           beta2=0.999, epsilon=1e-8, decay_rate=1, batch_size=32, epochs=5,
           save_path='/tmp/model.ckpt'):
-    # get X_train, Y_train, X_valid, and Y_valid from Data_train and Data_valid
     X_train, Y_train = Data_train
     X_valid, Y_valid = Data_valid
 
-    # initialize x, y and add them to collection
     x = tf.placeholder(tf.float32, shape=[None, X_train.shape[1]], name='x')
     tf.add_to_collection('x', x)
     y = tf.placeholder(tf.float32, shape=[None, Y_train.shape[1]], name='y')
     tf.add_to_collection('y', y)
-    # initialize y_pred and add it to collection
     y_pred = forward_prop(x, layers, activations, epsilon)
     tf.add_to_collection('y_pred', y_pred)
-    # intialize loss and add it to collection
     loss = calculate_loss(y, y_pred)
     tf.add_to_collection('loss', loss)
-    # intialize accuracy and add it to collection
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accuracy)
-    # intialize global_step variable
-    # hint: not trainable
     global_step = tf.Variable(0, trainable=False)
-    tf.add_to_collection('global_step', global_step)
-    # compute decay_steps
-    decay_step = X_train.shape[0] // batch_size
-    # create "alpha" the learning rate decay operation in tensorflow
-    alpha = learning_rate_decay(alpha, decay_rate, global_step, decay_step)
-    train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon, global_step)
+    decay_step = 10*(10*epochs)
+    alpha_decay = learning_rate_decay(
+        alpha, decay_rate, global_step, decay_step)
+    train_op = create_Adam_op(loss, alpha_decay, beta1,
+                              beta2, epsilon, global_step)
     tf.add_to_collection('train_op', train_op)
-    # initizalize train_op and add it to collection
-    # hint: don't forget to add global_step parameter in optimizer().minimize()
+
     saver = tf.train.Saver()
     init = tf.global_variables_initializer()
     with tf.Session() as sess:
         sess.run(init)
         for i in range(epochs):
-            # print training and validation cost and accuracy
             count = 1
             cost, train_acc = sess.run((loss, accuracy), feed_dict={
                                        x: X_train, y: Y_train})
