@@ -29,24 +29,27 @@ def create_batch_norm_layer(prev, n, activation):
     """
     kernal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
     layer = tf.keras.layers.Dense(
-        units=n, activation=None,
+        units=n, activation= activation,
         kernel_initializer=kernal)
     z = layer(prev)
     if activation is None:
         return z
-    mean, variance = tf.nn.moments(z, axes=[0])
-    gamma = tf.Variable(tf.constant(1.0, shape=[n]), trainable=True)
-    beta = tf.Variable(tf.constant(0.0, shape=[n]), trainable=True)
-    epsilon = 1e-8
-    z_norm = tf.nn.batch_normalization(z, mean, variance, beta, gamma, epsilon)
+    else:
+        mean, variance = tf.nn.moments(z, axes=[0])
+        gamma = tf.Variable(1., trainable=True)
+        beta = tf.Variable(0., trainable=True)
+        epsilon = 1e-8
+        z_norm = tf.nn.batch_normalization(
+            z, mean, variance, beta, gamma, epsilon)
     return activation(z_norm)
 
 
 def forward_prop(prev, layers, activations, epsilon):
     """all layers get batch_normalization but the last one, that stays 
     without any activation or normalization"""
-    for i in range(len(layers)):
+    for i in range(len(layers)-1):
         prev = create_batch_norm_layer(prev, layers[i], activations[i])
+    prev = create_batch_norm_layer(prev, layers[-1], activations[-1])
     return prev
 
 
@@ -120,7 +123,6 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
             print("\tTraining Accuracy: {}".format(train_acc))
             print("\tValidation Cost: {}".format(valid_cost))
             print("\tValidation Accuracy: {}".format(valid_acc))
-            # shuffle data
             X_sh, Y_sh = shuffle_data(X_train, Y_train)
             for j in range(0, X_train.shape[0], batch_size):
                 X_bat = X_sh[j:j+batch_size, :]  # conserve all the columns
@@ -134,7 +136,6 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
                     print("\t\tCost: {}".format(batch_cost))
                     print("\t\tAccuracy: {}".format(batch_acc))
                 count += 1
-                # run training operation
         cost_f, train_acc_f = sess.run((loss, accuracy), feed_dict={
                                        x: X_train, y: Y_train})
         valid_cost_f, valid_acc_f = sess.run(
@@ -146,8 +147,3 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
         print("\tValidation Accuracy: {}".format(valid_acc_f))
         save_path = saver.save(sess, save_path)
     return save_path
-    # print batch cost and accuracy
-
-    # print training and validation cost and accuracy again
-
-    # save and return the path to where the model was saved
