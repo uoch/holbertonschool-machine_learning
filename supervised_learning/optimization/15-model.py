@@ -234,7 +234,8 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001,
     tf.add_to_collection('accuracy', accuracy)
 
     global_step = tf.Variable(0, trainable=False)
-    alpha = learning_rate_decay(alpha, decay_rate, global_step, 1)
+    decay_setp = len(X_train) // batch_size
+    alpha = learning_rate_decay(alpha, decay_rate, global_step, decay_setp)
 
     train_op = create_Adam_op(loss, alpha, beta1, beta2, epsilon)
     tf.add_to_collection('train_op', train_op)
