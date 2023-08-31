@@ -100,7 +100,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     decay_step = 1
     alpha_decay = learning_rate_decay(
         alpha, decay_rate, global_step, decay_step)
-    adjusted_learning_rate = (6/ tf.sqrt(t+1)) * alpha
+    adjusted_learning_rate = (5.436563657/ tf.sqrt(t+1)) * alpha
 
     train_op = create_Adam_op(loss, adjusted_learning_rate, beta1,
                               beta2, epsilon, global_step)
