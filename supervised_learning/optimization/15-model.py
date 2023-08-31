@@ -80,6 +80,7 @@ def create_Adam_op(loss, alpha, beta1, beta2, epsilon, global_step):
 def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
           beta2=0.999, epsilon=1e-8, decay_rate=1, batch_size=32, epochs=5,
           save_path='/tmp/model.ckpt'):
+    """train_model function"""
     X_train, Y_train = Data_train
     X_valid, Y_valid = Data_valid
 
@@ -94,7 +95,7 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accuracy)
     global_step = tf.Variable(0, trainable=False)
-    decay_step= 10
+    decay_step = 10
     alpha_decay = learning_rate_decay(
         alpha, decay_rate, global_step, decay_step)
     train_op = create_Adam_op(loss, alpha_decay, beta1,
@@ -139,4 +140,4 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
         print("\tValidation Cost: {}".format(valid_cost_f))
         print("\tValidation Accuracy: {}".format(valid_acc_f))
         save_path = saver.save(sess, save_path)
-    return save_path 
+    return save_path
