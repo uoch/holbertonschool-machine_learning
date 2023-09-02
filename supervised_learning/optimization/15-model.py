@@ -32,23 +32,30 @@ def create_batch_norm_layer(prev, n, activation):
         units=n, activation=activation,
         kernel_initializer=kernal)
     z = layer(prev)
-    if activation is None:
-        return z
-    else:
-        mean, variance = tf.nn.moments(z, axes=[0])
-        gamma = tf.Variable(1., trainable=True)
-        beta = tf.Variable(0., trainable=True)
-        epsilon = 1e-8
-        z_norm = tf.nn.batch_normalization(
-            z, mean, variance, beta, gamma, epsilon)
+    mean, variance = tf.nn.moments(z, axes=[0])
+    gamma = tf.Variable(1., trainable=True)
+    beta = tf.Variable(0., trainable=True)
+    epsilon = 1e-8
+    z_norm = tf.nn.batch_normalization(
+        z, mean, variance, beta, gamma, epsilon)
     return activation(z_norm)
+
+
+def create_layer(prev, n, activation):
+    """create a layer"""
+    kernal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+    layer = tf.layers.Dense(
+        units=n, activation=activation,
+        kernel_initializer=kernal)
+    return layer(prev)
 
 
 def forward_prop(prev, layers, activations, epsilon):
     """all layers get batch_normalization but the last one, that stays
     without any activation or normalization"""
-    for i in range(len(layers)):
+    for i in range(len(layers)-1):
         prev = create_batch_norm_layer(prev, layers[i], activations[i])
+    prev = create_layer(prev, layers[-1], activations[-1])
     return prev
 
 
