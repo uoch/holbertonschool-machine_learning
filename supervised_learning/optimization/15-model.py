@@ -47,7 +47,7 @@ def create_batch_norm_layer(prev, n, activation):
 
 
 def forward_prop(prev, layers, activations, epsilon):
-    """all layers get batch_normalization but the last one, that stays 
+    """all layers get batch_normalization but the last one, that stays
     without any activation or normalization"""
     for i in range(len(layers)-1):
         prev = create_batch_norm_layer(prev, layers[i], activations[i])
