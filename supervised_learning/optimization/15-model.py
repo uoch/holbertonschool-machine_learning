@@ -23,24 +23,6 @@ def calculate_loss(y, y_pred):
     return loss
 
 
-def create_batch_norm_layer(prev, n, activation):
-    """
-    apply the activation function to the normalized inputs
-    """
-    kernal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
-    layer = tf.layers.Dense(
-        units=n, activation=activation,
-        kernel_initializer=kernal)
-    z = layer(prev)
-    mean, variance = tf.nn.moments(z, axes=[0])
-    gamma = tf.Variable(1., trainable=True)
-    beta = tf.Variable(0., trainable=True)
-    epsilon = 1e-8
-    z_norm = tf.nn.batch_normalization(
-        z, mean, variance, beta, gamma, epsilon)
-    return activation(z_norm)
-
-
 def create_layer(prev, n, activation):
     """create a layer"""
     kernal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
@@ -48,6 +30,23 @@ def create_layer(prev, n, activation):
         units=n, activation=activation,
         kernel_initializer=kernal)
     return layer(prev)
+
+
+def create_batch_norm_layer(prev, n, activation):
+    """
+    apply the activation function to the normalized inputs
+    """
+    z = create_layer(prev, n, activation)
+    if activation is None:
+        return z
+    else:
+        mean, variance = tf.nn.moments(z, axes=[0])
+        gamma = tf.Variable(1., trainable=True)
+        beta = tf.Variable(0., trainable=True)
+        epsilon = 1e-8
+        z_norm = tf.nn.batch_normalization(
+            z, mean, variance, beta, gamma, epsilon)
+        return activation(z_norm)
 
 
 def forward_prop(prev, layers, activations, epsilon):
