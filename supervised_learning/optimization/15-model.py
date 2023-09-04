@@ -52,9 +52,26 @@ def create_batch_norm_layer(prev, n, activation):
 def forward_prop(prev, layers, activations, epsilon):
     """all layers get batch_normalization but the last one, that stays
     without any activation or normalization"""
-    for i in range(len(layers)-1):
-        prev = create_batch_norm_layer(prev, layers[i], activations[i])
-    prev = create_layer(prev, layers[-1], activations[-1])
+
+    for i in range(len(layers)):
+        kenal = tf.keras.initializers.VarianceScaling(mode='fan_avg')
+        layer = tf.layers.Dense(
+            units=layers[i],
+            kernel_initializer=kenal)
+        z = layer(prev)
+
+        if activations[i] is not None:
+            mean, variance = tf.nn.moments(z, axes=[0])
+            gamma = tf.Variable(tf.constant(1.0, shape=[layers[i]]),
+                                trainable=True)
+            beta = tf.Variable(tf.constant(0.0, shape=[layers[i]]),
+                               trainable=True)
+            z_norm = tf.nn.batch_normalization(
+                z, mean, variance, beta, gamma, epsilon)
+            prev = activations[i](z_norm)
+        else:
+            prev = z
+
     return prev
 
 
@@ -100,7 +117,9 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
     accuracy = calculate_accuracy(y, y_pred)
     tf.add_to_collection('accuracy', accuracy)
     global_step = tf.Variable(0, trainable=False)
-    decay_step = 813
+    decay_step = len(X_train) // batch_size
+    if len(X_train) % batch_size:
+        decay_step += 1
     alpha_decay = learning_rate_decay(
         alpha, decay_rate, global_step, decay_step)
     train_op = create_Adam_op(loss, alpha_decay, beta1,
