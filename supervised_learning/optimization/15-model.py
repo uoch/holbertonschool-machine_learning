@@ -143,12 +143,8 @@ def model(Data_train, Data_valid, layers, activations, alpha=0.001, beta1=0.9,
             print("\tValidation Accuracy: {}".format(valid_acc))
             X_sh, Y_sh = shuffle_data(X_train, Y_train)
             for j in range(0, X_train.shape[0], batch_size):
-                if len(X_train) % batch_size:
-                    X_bat = X_sh[j:j+batch_size, :]  # conserve all the columns
-                    Y_bat = Y_sh[j:j+batch_size, :]  # conserve all the columns
-                else:
-                    X_bat = X_sh[j:(j+batch_size+1):]
-                    Y_bat = Y_sh[j:(j+batch_size+1), :]
+                X_bat = X_sh[j:j+batch_size, :]  # conserve all the columns
+                Y_bat = Y_sh[j:j+batch_size, :]  # conserve all the columns
                 sess.run(train_op, feed_dict={
                          x: X_bat, y: Y_bat, global_step: i})
                 if count % 100 == 0:
