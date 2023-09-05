@@ -32,7 +32,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             + weights['b' + str(i + 1)]
         a['D' + str(i + 1)] = np.random.binomial(1, keep_prob, size=z.shape)
         if i == L - 1:
-            a['A' + str(i + 1)] = softmax(z) * a['D' + str(i + 1)]/keep_prob
+            a['A' + str(i + 1)] = softmax(z)
         else:
-            a['A' + str(i + 1)] = tanh(z) * a['D' + str(i + 1)]/keep_prob
+            a['A' + str(i + 1)] = (tanh(z) * a['D' + str(i + 1)])/keep_prob
     return a
