@@ -7,11 +7,10 @@ def dropout_gradient_descent(Y, weights, cache, alpha, keep_prob, L):
     """gradient_descent with dropout
     the probability shoud be applied to dz"""
     m = Y.shape[1]
+    cache['D0'] = np.ones((cache['A0'].shape[0], m))
     for i in range(L, 0, -1):
         if i == L:
             dz = cache['A' + str(L)] - Y
-        if i == 1:
-            cache['D0'] = np.ones((cache['A0'].shape[0], m))*keep_prob
         ap = cache['A' + str(i - 1)] * cache['D' + str(i - 1)]
         dw = np.matmul(dz, ap.T) / m
         db = np.sum(dz, axis=1, keepdims=True) / m
