@@ -3,12 +3,6 @@
 import tensorflow.keras as K
 
 
-def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
-    """
-    alpha is the original learning rate
-    """
-    alpha = alpha / (1 + decay_rate * (global_step // decay_step))
-    return alpha
 
 
 def train_model(network, data, labels, batch_size,
@@ -17,6 +11,7 @@ def train_model(network, data, labels, batch_size,
                 learning_rate_decay=False, alpha=0.1, decay_rate=1,
                 verbose=True,
                 shuffle=False):
+    """keras model train function"""
     callbacks = []
     if early_stopping and validation_data:
         callbacks.append(K.callbacks.EarlyStopping(patience=patience))
