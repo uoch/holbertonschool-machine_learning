@@ -3,7 +3,8 @@
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, epochs, validation_data=None,
+def train_model(network, data, labels, batch_size, epochs,
+                validation_data=None,
                 early_stopping=False,
                 patience=0, verbose=True, shuffle=False):
     """ Train a model with Keras and return the History object
