@@ -24,7 +24,6 @@ def train_model(network, data, labels, batch_size, epochs,
     if save_best:
         callbacks.append(K.callbacks.ModelCheckpoint(filepath,
                                                      save_best_only=True))
-    print(callbacks)
     return network.fit(data, labels,
                        batch_size=batch_size,
                        epochs=epochs,
