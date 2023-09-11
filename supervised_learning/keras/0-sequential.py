@@ -16,6 +16,6 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         else:
             model.add(K.layers.Dense(layers[i], activation=activations[i],
                                      kernel_regularizer=L2))
-            if activations[i] != 'softmax':
+            if activations[i] != 'softmax' or len(layers) == 1  :
                 model.add(K.layers.Dropout(1-keep_prob))
     return model
