@@ -18,6 +18,7 @@ def adjust_kernel(kernel):
 
 
 def w_h_out(w_prev, h_prev, kh, kw, sh, sw, padding, kernel):
+    """ w_h_out"""
     if padding == 'same':
         ph, pw = adjust_kernel(kernel)
         output_h = ((h_prev + 2 * ph - kh) // sh) + 1
@@ -58,7 +59,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     for i in range(0, output_h):
         x = i*i_step  # you should use the step on the image, not the output
         for j in range(0, output_w):
-            y = j*j_step  # you should use the step on the image, not the output
+            y = j*j_step  # you should use step on the image, not the output
             zoom_in = padded_images[:, x:x+kh, y:y+kw]
             product = kernel * zoom_in
             pixel = np.sum(product, axis=(1, 2))
