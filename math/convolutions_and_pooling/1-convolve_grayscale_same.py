@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
+"""padding"""
 import numpy as np
 
 
 def convolve_grayscale_same(images, kernel):
+    """cnvolve_grayscale_same"""
     m, h, w = images.shape
     kh, kw = kernel.shape
     p_h = (kh - 1) // 2  # Vertical padding
