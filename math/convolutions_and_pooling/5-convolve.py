@@ -11,8 +11,8 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
 
     if padding == 'same':
         # solve n+2p-f+1 = n
-        p_h = int(kh + (i_step*(h-1)-h)/2)
-        p_w = int((kw + (j_step*(w-1)-w)/2))
+        p_h = int(np.ceil(kh + (i_step*(h-1)-h)/2))
+        p_w = int(np.ceil((kw + (j_step*(w-1)-w)/2)))
     elif padding == 'valid':
         p_h, p_w = 0, 0
 
@@ -31,10 +31,10 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
         for j in range(0, output_w):
             y = j*j_step  # you should use step on the image, not the output
             zoom_in = padded_images[:, x:x+kh, y:y+kw, :]
+            # with multiple kernels, you should sum the results of each one
             for k in range(nc):
                 kernel = kernels[:, :, :, k]
                 product = kernel * zoom_in
                 pixel = np.sum(product, axis=(1, 2, 3))
                 output[:, i, j, k] = pixel
-
     return output
