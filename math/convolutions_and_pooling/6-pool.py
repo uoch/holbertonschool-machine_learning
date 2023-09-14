@@ -18,11 +18,9 @@ def pool(images, kernel_shape, stride, mode='max'):
             y = j*j_step  # you should use step on the image, not the output
             zoom_in = images[:, x:x+kh, y:y+kw, :]
             if mode == 'max':
-                print(zoom_in.shape)
                 pixel = np.max(zoom_in, axis=(1, 2))
                 output[:, i, j, :] = pixel
             elif mode == 'avg':
-                print(zoom_in.shape)
                 pixel = np.mean(zoom_in, axis=(1, 2))
                 output[:, i, j, :] = pixel
 
