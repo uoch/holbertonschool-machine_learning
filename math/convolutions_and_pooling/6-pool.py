@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+"""padding"""
+import numpy as np
+
+
+def pool(images, kernel_shape, stride, mode='max'):
+    """pool"""
+    m, h, w, c = images.shape
+    kh, kw = kernel_shape
+    i_step, j_step = stride
+
+    output_h = int(np.ceil((h-kh)/i_step+1))
+    output_w = int(np.ceil((w-kw)/j_step+1))
+    output = np.zeros((m, output_h, output_w))
+    for i in range(0, output_h):
+        x = i*i_step  # you should use the step on the image, not the output
+        for j in range(0, output_w):
+            y = j*j_step  # you should use step on the image, not the output
+            zoom_in = images[:, x:x+kh, y:y+kw, :]
+            if mode == 'max':
+                pixel = np.max(zoom_in, axis=(1, 2, 3))
+                output[:, i, j] = pixel
+            elif mode == 'avg':
+                pixel = np.mean(zoom_in, axis=(1, 2, 3))
+                output[:, i, j] = pixel
+
+    return output
