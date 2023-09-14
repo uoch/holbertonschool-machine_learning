@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""padding"""
+"""pooling module"""
 import numpy as np
 
 
 def pool(images, kernel_shape, stride, mode='max'):
-    """pool"""
+    """pool for images with multiple channels"""
     m, h, w, c = images.shape
     kh, kw = kernel_shape
     i_step, j_step = stride
@@ -18,10 +18,12 @@ def pool(images, kernel_shape, stride, mode='max'):
             y = j*j_step  # you should use step on the image, not the output
             zoom_in = images[:, x:x+kh, y:y+kw, :]
             if mode == 'max':
-                pixel = np.max(zoom_in)
+                print(zoom_in.shape)
+                pixel = np.max(zoom_in, axis=(1, 2))
                 output[:, i, j, :] = pixel
             elif mode == 'avg':
-                pixel = np.mean(zoom_in)
+                print(zoom_in.shape)
+                pixel = np.mean(zoom_in, axis=(1, 2))
                 output[:, i, j, :] = pixel
 
     return output
