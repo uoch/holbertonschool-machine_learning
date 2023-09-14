@@ -11,8 +11,8 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
 
     if padding == 'same':
         # solve n+2p-f+1 = n
-        p_h = int(np.ceil(kh + (i_step*(h-1)-h)/2))
-        p_w = int(np.ceil((kw + (j_step*(w-1)-w)/2)))
+        p_h = int(np.ceil((i_step*(h-1)-h+kh)/2))
+        p_w = int(np.ceil((j_step*(w-1)-w+kw)/2))
     elif padding == 'valid':
         p_h, p_w = 0, 0
 
