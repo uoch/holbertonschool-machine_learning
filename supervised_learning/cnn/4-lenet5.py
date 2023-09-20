@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+"""lenet5 architecture"""
 import tensorflow.compat.v1 as tf
 
 
@@ -22,11 +22,11 @@ def lenet5(x, y):
     init = tf.keras.initializers.VarianceScaling(scale=2.0)
 
     conv1 = tf.layers.Conv2D(filters=6, kernel_size=5, padding='same',
-                          kernel_initializer=init, activation='relu')(x)
+                             kernel_initializer=init, activation='relu')(x)
     pool1 = tf.layers.MaxPooling2D(2, 2)(conv1)
 
     conv2 = tf.layers.Conv2D(filters=16, kernel_size=5, padding='valid',
-                          kernel_initializer=init, activation='relu')(pool1)
+                             kernel_initializer=init, activation='relu')(pool1)
     pool2 = tf.layers.MaxPooling2D(2, 2)(conv2)
 
     fc = tf.layers.Flatten()(pool2)
