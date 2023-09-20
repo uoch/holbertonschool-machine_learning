@@ -13,16 +13,14 @@ def pool_backward(dA, A_prev, kernel_shape, stride=(1, 1), mode='max'):
     for i in range(m):
         for j in range(h_new):
             for k in range(w_new):
-                for k in range(c):
+                for l in range(c):
                     x = j*sh
                     y = k*sw
-                    zoom = A_prev[i, x:x+kh, y:y+kw, k]
+                    zoom = A_prev[i, x:x+kh, y:y+kw, l]
                     if mode == 'max':
-                        # max value in zoom set da otherwise 0
-                        dA_prev[i, x:x+kh, y:y+kw, k] += np.where(
-                            zoom == np.max(zoom), dA[i, j, k, k], 0)
+                        dA_prev[i, x:x+kh, y:y+kw, l] += np.where(
+                            zoom == np.max(zoom), dA[i, j, k, l], 0)
                     elif mode == 'avg':
-                        # zoom fulled with da/size of kernel
-                        dA_prev[i, x:x+kh, y:y+kw, k] += dA[i, j, k, k] / (
+                        dA_prev[i, x:x+kh, y:y+kw, l] += dA[i, j, k, l] / (
                             kh * kw)
     return dA_prev
