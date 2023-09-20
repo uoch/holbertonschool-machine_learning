@@ -21,21 +21,20 @@ def lenet5(x, y):
     # Initialize weights with He normal initializer
     init = tf.keras.initializers.VarianceScaling(scale=2.0)
 
-    conv1 = tf.layers.Conv2D(6, (5, 5), padding='same',
-                             kernel_initializer=init, activation='relu')(x)
-    pool1 = tf.layers.MaxPooling2D((2, 2), (2, 2))(conv1)
+    conv1 = tf.layers.Conv2D(filters=6, kernel_size=5, padding='same',
+                          kernel_initializer=init, activation='relu')(x)
+    pool1 = tf.layers.MaxPooling2D(2, 2)(conv1)
 
-    conv2 = tf.layers.Conv2D(16, (5, 5), padding='valid',
-                             kernel_initializer=init, activation='relu')(pool1)
-    pool2 = tf.layers.MaxPooling2D((2, 2), (2, 2))(conv2)
+    conv2 = tf.layers.Conv2D(filters=16, kernel_size=5, padding='valid',
+                          kernel_initializer=init, activation='relu')(pool1)
+    pool2 = tf.layers.MaxPooling2D(2, 2)(conv2)
 
     fc = tf.layers.Flatten()(pool2)
     fc1 = tf.layers.Dense(120, activation='relu',
                           kernel_initializer=init)(fc)
     fc2 = tf.layers.Dense(84, activation='relu',
                           kernel_initializer=init)(fc1)
-    fc3 = tf.layers.Dense(10, activation='softmax',
-                          kernel_initializer=init)(fc2)
+    fc3 = tf.layers.Dense(10, kernel_initializer=init)(fc2)
     y_pred = tf.nn.softmax(fc3)
     loss = tf.losses.softmax_cross_entropy(onehot_labels=y, logits=fc3)
     train_op = tf.train.AdamOptimizer().minimize(loss)
