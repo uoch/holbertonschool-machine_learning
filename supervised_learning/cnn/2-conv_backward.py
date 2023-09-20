@@ -6,7 +6,7 @@ import numpy as np
 def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     """backward prop over a conv layer of a neural network
     dz: np.ndarray (m, h_new, w_new, c_new) containing the partial derivatives
-    of the unactivated output of the convolutional layer 
+    of the unactivated output of the convolutional layer
     A_prev: np.ndarray (m, h_prev, w_prev, c_prev) output of the previous layer
     W: np.ndarray (kh, kw, c_prev, c_new) kernels for the convolution
     b: np.ndarray (1, 1, 1, c_new) biases applied to the convolution
@@ -16,8 +16,8 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
     kh, kw, c_prev, c_new = W.shape
     sh, sw = stride
     if padding == 'same':
-        ph = int(((h_prev-1)*sh+kh-h_prev)/2)
-        pw = int(((w_prev-1)*sw+kw-w_prev)/2)
+        ph = int(np.ceil((sh*(h_prev-1)-h_prev+kh)/2))
+        pw = int(np.ceil((sw*(w_prev-1)-w_prev+kw)/2))
     elif padding == 'valid':
         ph, pw = 0, 0
     elif type(padding) == tuple:
