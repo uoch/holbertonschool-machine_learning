@@ -9,9 +9,9 @@ def inception_block(A_prev, filters):
     @A_prev: output from the previous layer
     @filters: tuple or list containing F1, F3R, F3, F5R, F5, FPP
         @F1: number of filters in the 1x1 convolution
-        @F3R: number of filters in the 1x1 convolution before the 3x3 convolution
+        @F3R: number of filters in the 1x1 convolution before the 3x3 convol
         @F3: number of filters in the 3x3 convolution
-        @F5R: number of filters in the 1x1 convolution before the 5x5 convolution
+        @F5R: number of filters in the 1x1 convolution before the 5x5 convol
         @F5: number of filters in the 5x5 convolution
         @FPP: number of filters in the 1x1 convolution after max pooling"""
     F1, F3R, F3, F5R, F5, FPP = filters
