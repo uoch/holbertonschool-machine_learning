@@ -6,14 +6,20 @@ inception_block = __import__('0-inception_block').inception_block
 
 def inception_network():
     """full inception network"""
+    init = K.initializers.he_normal()
     X = K.Input(shape=(224, 224, 3))
+    # first conv layer
     x1 = K.layers.Conv2D(filters=64, kernel_size=(7, 7),
-                         strides=(2, 2), activation='relu', padding='same')(X)
+                         strides=(2, 2),
+                         kernel_initializer=init,
+                         activation='relu', padding='same')(X)
+
     x2 = K.layers.MaxPool2D(pool_size=(
         3, 3), strides=(2, 2), padding='same')(x1)
-    x3 = K.layers.Conv2D(filters=64, kernel_size=(1, 1), activation='relu')(x2)
+    # second conv layer
     x4 = K.layers.Conv2D(filters=192, kernel_size=(
-        3, 3), activation='relu', padding='same')(x3)
+        3, 3), activation='relu', padding='same')(x2)
+
     x5 = K.layers.MaxPool2D(pool_size=(
         3, 3), strides=(2, 2), padding='same')(x4)
     # enter inception blocks
