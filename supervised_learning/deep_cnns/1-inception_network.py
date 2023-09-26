@@ -55,5 +55,5 @@ def inception_network():
     y = K.layers.Dropout(0.4)(final_union)
     # linear fully connected layer with 1000 units for classification
     Y = K.layers.Dense(units=1000, activation="softmax")(y)
-    model = K.Model(inputs=X, outputs=Y)
-    return model
+    model_1 = K.Model(inputs=X, outputs=Y)
+    return model_1
