@@ -6,7 +6,7 @@ import tensorflow.keras as K
 def identity_block(A_prev, filters):
     """identy block
     flow the this pattern:
-    Conv2D(1x1) -> BatchNormalization -> ReLU 
+    Conv2D(1x1) -> BatchNormalization -> ReLU
     -> Conv2D(3x3) -> BatchNormalization -> ReLU
     -> Conv2D(1x1) -> BatchNormalization -> add the input
     -> ReLU -> output
@@ -29,7 +29,7 @@ def identity_block(A_prev, filters):
     act2 = K.layers.Activation('relu')(bn2)
     # third layer
     layer3 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1),
-                             padding='same', activation='relu',
+                             padding='same',
                              kernel_initializer=weights_int)(act2)
     bn3 = K.layers.BatchNormalization(axis=3)(layer3)
 
