@@ -6,7 +6,13 @@ projection_block = __import__('3-projection_block').projection_block
 
 
 def resnet50():
-    """resnet50 architecture"""
+    """resnet50 architecture
+    followed the graph in the paper
+    becareful with the first skip connection
+    it's projection_block instead of identity_block with stride=1
+    dont forget batch normalization before the activation for the first
+    conv1 as mentionned in the 3.4. Implementation Details
+    """
     X = K.Input(shape=(224, 224, 3))
     init = K.initializers.he_normal()
     # conv1
