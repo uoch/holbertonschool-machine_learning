@@ -10,7 +10,7 @@ def inception_network():
     # convolutional layer with 7x7 filter
     x1 = K.layers.Conv2D(filters=64, kernel_size=(7, 7),
                          strides=(2, 2),
-                         activation='relu', 
+                         activation='relu',
                          padding='same')(X)
     # max pool layer with 3x3 filter and stride of 2
     x2 = K.layers.MaxPool2D(pool_size=(
@@ -54,6 +54,6 @@ def inception_network():
     # dropout (40%)
     y = K.layers.Dropout(0.4)(final_union)
     # linear fully connected layer with 1000 units for classification
-    Y = K.layers.Dense(units=1000, activation = "softmax")(y)
+    Y = K.layers.Dense(units=1000, activation="softmax")(y)
     model = K.Model(inputs=X, outputs=Y)
     return model
