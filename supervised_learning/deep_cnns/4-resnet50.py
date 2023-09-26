@@ -6,6 +6,7 @@ projection_block = __import__('3-projection_block').projection_block
 
 
 def resnet50():
+    """resnet50 architecture"""
     X = K.Input(shape=(224, 224, 3))
     init = K.initializers.he_normal()
     # conv1
@@ -13,8 +14,9 @@ def resnet50():
                             padding='same',
                             kernel_initializer=init)(X)
     bn1 = K.layers.BatchNormalization(axis=3)(conv1)
+    activation = K.layers.Activation('relu')(bn1)
     max_pool = K.layers.MaxPooling2D(pool_size=(
-        3, 3), strides=(2, 2), padding='same')(bn1)
+        3, 3), strides=(2, 2), padding='same')(activation)
     # conv2_x
     conv2_0 = projection_block(max_pool, [64, 64, 256], s=1)
     conv2_1 = identity_block(conv2_0, [64, 64, 256])
