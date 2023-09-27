@@ -5,7 +5,7 @@ import tensorflow.keras as K
 
 def dense_block(X, nb_filters, growth_rate, layers):
     """dense block for DenseNet
-    BN-ReLU-Conv(1×1)-BN-ReLU-Conv(3×3) 
+    BN-ReLU-Conv(1×1)-BN-ReLU-Conv(3×3)
     this 7 layers are called dense block so number of layers is layers * 7"""
 
     for i in range(layers):
