@@ -76,17 +76,8 @@ if __name__ == "__main__":
     model.compile(optimizer=op, loss='categorical_crossentropy',
                   metrics=['accuracy'])
 
-    # Load the model weights
-    model.load_weights('cifar10_needmore_training_4.h5')
-
-    for layer in base_model.layers[:-10]:
-        layer.trainable = True
-    model.compile(optimizer=op, loss='categorical_crossentropy',
-                  metrics=['accuracy'])
-
-    # Resume training
     model.fit(
-        X_p, Y_p, validation_data=(X_tp, Y_tp), batch_size=8, epochs=100,
+        X_p, Y_p, validation_data=(X_tp, Y_tp), batch_size=64, epochs=100,
         verbose=1, shuffle=True, callbacks=[callbacks, tensorboard_callback]
     )
 
