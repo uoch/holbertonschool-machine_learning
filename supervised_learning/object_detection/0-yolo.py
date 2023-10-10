@@ -6,6 +6,8 @@ import os
 
 
 class Yolo:
+    """Yolo class"""
+
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
         """Constructor method
         model_path: path to where a Darknet Keras model is stored
