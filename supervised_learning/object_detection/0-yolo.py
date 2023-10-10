@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Class Yolo v3"""
+"""this module contains the class Yolo"""
 import tensorflow.keras as K
 import numpy as np
 import os
