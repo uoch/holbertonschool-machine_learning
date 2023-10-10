@@ -41,7 +41,7 @@ class Yolo:
             box_prob = sigmoid(output[:, :, :, 5:])
             box_confidences.append(box_conf)
             box_class_probs.append(box_prob)
-            # t_x, t_y : x and y coordinates of the center point of the anchor box
+            # t_x, t_y : x and y coordinates of the center pt of the anchor box
             # t_w, t_h : width and height of the anchor box
             t_x = output[:, :, :, 0]
             t_y = output[:, :, :, 1]
