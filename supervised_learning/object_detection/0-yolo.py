@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
+"""Class Yolo v3"""
 import tensorflow.keras as K
 import numpy as np
-import cv2
-import glob
 import os
 
 
