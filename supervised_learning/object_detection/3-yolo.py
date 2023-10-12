@@ -167,7 +167,7 @@ class Yolo:
             classes_of_cls = box_classes[idx]
             scores_of_cls = box_scores[idx]
 
-            # Sort the boxes, classes, and scores for the current class by confidence scores
+            # Sort  by confidence scores from high to low
             order = scores_of_cls.argsort()[::-1]
             keep = []
 
@@ -183,7 +183,7 @@ class Yolo:
                 i = order[0]
                 keep.append(i)
 
-                # Intersection coordinates of the current box with the rest of boxes
+                # Intersection coord of the crnt box with the rest of boxes
                 xx1 = np.maximum(x1[i], x1[order[1:]])
                 yy1 = np.maximum(y1[i], y1[order[1:]])
                 xx2 = np.minimum(x2[i], x2[order[1:]])
