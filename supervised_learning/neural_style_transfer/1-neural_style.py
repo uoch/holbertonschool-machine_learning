@@ -59,7 +59,7 @@ class NST:
             layer.trainable = False
         vgg19.save("model.h5")
         model = tf.keras.models.load_model(
-            "vgg_base_model.h5",
+            "model.h5",
             # change MaxPooling2D to AveragePooling2D like in the paper
             custom_objects={
                 "MaxPooling2D": tf.keras.layers.AveragePooling2D()
