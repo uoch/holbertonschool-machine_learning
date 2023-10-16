@@ -51,14 +51,13 @@ class NST:
 
     def load_model(self):
         """load model"""
-        base_model = tf.keras.applications.VGG19(include_top=False,
-                                                 weights='imagenet')
-        for layer in base_model.layers:
+        model = tf.keras.applications.VGG19(include_top=False)
+        for layer in model.layers:
             layer.trainable = False
-        base_model.save("model.h5")
-        base_model = tf.keras.models.load_model("model.h5")
-        style_outputs = [base_model.get_layer(name).output
+        model.save("model.h5")
+        model = tf.keras.models.load_model("model.h5")
+        style_outputs = [model.get_layer(name).output
                          for name in self.style_layers]
-        content_outputs = base_model.get_layer(self.content_layer).output
+        content_outputs = model.get_layer(self.content_layer).output
         model_outputs = style_outputs + [content_outputs]
-        self.model = tf.keras.models.Model(base_model.input, model_outputs)
+        self.model = tf.keras.models.Model(model.input, model_outputs)
