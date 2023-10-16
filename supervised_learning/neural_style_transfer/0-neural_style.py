@@ -12,10 +12,12 @@ class NST:
     def __init__(self, style_image, content_image, alpha=1e4, beta=1):
         """initialization"""
         tf.executing_eagerly()
-        if type(style_image) is not np.ndarray or style_image.shape[2] != 3:
+        if type(style_image) is not np.ndarray or style_image.ndim != 3\
+                or style_image.shape[2] != 3:
             raise TypeError(
                 "style_image must be a numpy.ndarray with shape (h, w, 3)")
-        if type(content_image) is not np.ndarray or content_image.shape[2] != 3:
+        if type(content_image) is not np.ndarray or content_image.ndim != 3\
+                or content_image.shape[2] != 3:
             raise TypeError(
                 "style_image must be a numpy.ndarray with shape (h, w, 3)")
         if (type(alpha) is not int and type(alpha) is not float) or alpha < 0:
@@ -33,7 +35,7 @@ class NST:
           between 0 and 1 and its largest side is 512 pixels
           """
         if type(image) is not np.ndarray or\
-                image.shape[2] != 3:
+                image.ndim != 3 or image.shape[2] != 3:
             raise TypeError(
                 'content_image must be a numpy.ndarray with shape (h, w, 3)')
         h, w, c = image.shape
