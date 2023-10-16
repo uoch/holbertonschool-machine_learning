@@ -44,6 +44,6 @@ class NST:
         new_h = int(h * (512/maxd))
         new_w = int(w * (512/maxd))
         image = tf.expand_dims(image, axis=0)
-        image /= 255
         resized = tf.image.resize(image, size=(new_h, new_w), method="bicubic")
+        resized /= 255
         return tf.clip_by_value(resized, 0.0, 1.0)
