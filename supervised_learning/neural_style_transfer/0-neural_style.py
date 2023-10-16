@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
-import matplotlib.image as mpimg
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-import tensorflow.keras as K
 
 
 class NST:
