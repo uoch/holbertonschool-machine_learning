@@ -169,7 +169,8 @@ class Yolo:
             boxes_of_cls = filtered_boxes[idx]
             classes_of_cls = box_classes[idx]
             scores_of_cls = box_scores[idx]
-
+            if len(boxes_of_cls) == 0:
+                continue
             # Sort  by confidence scores from high to low
             order = scores_of_cls.argsort()[::-1]
             keep = []
@@ -209,10 +210,10 @@ class Yolo:
             box_predictions.append(boxes_of_cls[keep])
             predicted_box_classes.append(classes_of_cls[keep])
             predicted_box_scores.append(scores_of_cls[keep])
-
-        box_predictions = np.concatenate(box_predictions)
-        predicted_box_classes = np.concatenate(predicted_box_classes)
-        predicted_box_scores = np.concatenate(predicted_box_scores)
+        if len(box_predictions) > 0:
+            box_predictions = np.concatenate(box_predictions)
+            predicted_box_classes = np.concatenate(predicted_box_classes)
+            predicted_box_scores = np.concatenate(predicted_box_scores)
 
         return box_predictions, predicted_box_classes, predicted_box_scores
 
@@ -296,13 +297,13 @@ class Yolo:
 
     def predict_frame(self, frame):
         """yolo algorithm on frame"""
-        #process frame
+        # process frame
         image = cv2.resize(frame, (self.model.input.shape[1],
                                    self.model.input.shape[2]),
                            interpolation=cv2.INTER_CUBIC)
         image = image / 255
         image = np.expand_dims(image, axis=0)
-        #predict
+        # predict
         outputs = self.model.predict(image)
         # process_outputs
         poutouts = [out[0] for out in outputs]
@@ -316,4 +317,3 @@ class Yolo:
             filtered_boxes, box_classes, box_scores)
         # show_boxes
         return boxes, box_classes, box_scores
-        
