@@ -50,14 +50,22 @@ class NST:
         return tf.clip_by_value(resized, 0.0, 1.0)
 
     def load_model(self):
-        """load model"""
-        model = tf.keras.applications.VGG19(include_top=False)
-        for layer in model.layers:
+        """
+        Load VGG19 model
+        :return: The model
+        """
+        vgg19 = tf.keras.applications.VGG19(include_top=False)
+        for layer in vgg19.layers:
             layer.trainable = False
-        model.save("model.h5")
-        model = tf.keras.models.load_model("model.h5")
-        style_outputs = [model.get_layer(name).output
-                         for name in self.style_layers]
-        content_outputs = model.get_layer(self.content_layer).output
-        model_outputs = style_outputs + [content_outputs]
-        self.model = tf.keras.models.Model(model.input, model_outputs)
+        vgg19.save("model.h5")
+        model = tf.keras.models.load_model(
+            "vgg_base_model.h5",
+            # change MaxPooling2D to AveragePooling2D like in the paper
+            custom_objects={
+                "MaxPooling2D": tf.keras.layers.AveragePooling2D()
+            })
+
+        outputs = ([model.get_layer(layer).output
+                   for layer in self.style_layers]
+                   + [model.get_layer(self.content_layer).output])
+        self.model = tf.keras.models.Model(model.input, outputs)
