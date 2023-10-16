@@ -56,7 +56,7 @@ class NST:
         for layer in base_model.layers:
             layer.trainable = False
         base_model.save("model.h5")
-        base_model = tf.keras.models.load_model("base_model.h5")
+        base_model = tf.keras.models.load_model("model.h5")
         style_outputs = [base_model.get_layer(name).output
                          for name in self.style_layers]
         content_outputs = base_model.get_layer(self.content_layer).output
