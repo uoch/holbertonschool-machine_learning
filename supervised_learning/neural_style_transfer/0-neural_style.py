@@ -36,11 +36,11 @@ class NST:
           between 0 and 1 and its largest side is 512 pixels
           """
         if type(image) is not np.ndarray or\
-                image.ndim != 3 or image.shape[2] != 3:
+                image.shape[-1] != 3:
             raise TypeError(
-                'content_image must be a numpy.ndarray with shape (h, w, 3)')
+                'image must be a numpy.ndarray with shape (h, w, 3)')
         h, w, c = image.shape
-        maxd = round(max(h, w))
+        maxd = max(h, w)
         new_h = int(h * (512/maxd))
         new_w = int(w * (512/maxd))
         image = tf.expand_dims(image, axis=0)
