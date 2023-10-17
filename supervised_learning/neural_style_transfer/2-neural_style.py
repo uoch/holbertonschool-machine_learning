@@ -51,29 +51,22 @@ class NST:
 
     def load_model(self):
         """
-        Load VGG19 model with MaxPooling2D layers replaced by AveragePooling2D
+        Load VGG19 model
         :return: The model
         """
         vgg19 = tf.keras.applications.VGG19(include_top=False)
-
-        # Replace MaxPooling2D layers with AveragePooling2D
         for layer in vgg19.layers:
-            vgg19.get_layer(layer.name).trainable = False
-            if isinstance(layer, tf.keras.layers.MaxPooling2D):
-                new_layer = tf.keras.layers.AveragePooling2D(
-                    pool_size=layer.pool_size,
-                    strides=layer.strides,
-                    padding=layer.padding,
-                    data_format=layer.data_format,
-                    name=layer.name
-                )
-                vgg19.get_layer(layer.name).output = new_layer(
-                    vgg19.get_layer(layer.name).output)
+            layer.trainable = False
         vgg19.save("model.h5")
-        model = tf.keras.models.load_model("model.h5")
+        model = tf.keras.models.load_model(
+            "model.h5",
+            # change MaxPooling2D to AveragePooling2D like in the paper
+            custom_objects={
+                "MaxPooling2D": tf.keras.layers.AveragePooling2D()
+            })
 
         outputs = ([model.get_layer(layer).output
-                    for layer in self.style_layers]
+                   for layer in self.style_layers]
                    + [model.get_layer(self.content_layer).output])
         self.model = tf.keras.models.Model(model.input, outputs)
 
@@ -86,6 +79,5 @@ class NST:
         ndata, h, w, c = tf.shape(input_layer).numpy()
         F = tf.reshape(input_layer, (ndata, h * w, c))
         gram = tf.matmul(F, F, transpose_a=True)
-        gram = tf.expand_dims(gram, axis=0)
-        gram /= tf.cast(h * w * c, tf.float32)
+        gram /= (h * w)
         return gram
