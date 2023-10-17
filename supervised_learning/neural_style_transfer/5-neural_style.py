@@ -114,6 +114,7 @@ class NST:
         return tf.reduce_sum(cost) * Csquare
 
     def style_cost(self, style_outputs):
+        """ style cost of all style layers"""
         l = len(self.style_layers)
         if len(style_outputs) != l:
             raise TypeError(
