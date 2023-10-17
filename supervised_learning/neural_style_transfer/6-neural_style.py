@@ -143,3 +143,5 @@ class NST:
         content_cost = tf.reduce_sum(mse) / (4 * h * w * c)
 
         return content_cost
+    def total_cost(self, generated_image):
+        
