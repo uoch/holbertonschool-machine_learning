@@ -105,7 +105,8 @@ class NST:
             raise TypeError("style_output must be a tensor of rank 4")
         if not isinstance(gram_target, (tf.Tensor, tf.Variable)) or\
                 tf.rank(gram_target).numpy() != 3:
-            raise TypeError("gram_target must be a tensor of rank 3")
+            raise TypeError(
+                f"gram_target must be a tensor of rank [1,{gram_target.shape[1]},{gram_target.shape[2]}]")
         gram_style = self.gram_matrix(style_output)
         Csquare = 1/style_output.shape[-1] ** 2
         cost = tf.square(gram_style - gram_target)
