@@ -105,8 +105,7 @@ class NST:
             raise TypeError("style_output must be a tensor of rank 4")
         channels = style_output.shape[-1]
         if not isinstance(gram_target, (tf.Tensor, tf.Variable)) or\
-                tf.rank(gram_target).numpy() != 3 or\
-        gram_target.shape != (1, channels, channels):
+                gram_target.shape != (1, channels, channels):
             raise TypeError(
                 f"gram_target must be a tensor of rank [1,{channels},{channels}]")
         gram_style = self.gram_matrix(style_output)
