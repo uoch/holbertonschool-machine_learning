@@ -107,7 +107,7 @@ class NST:
         if not isinstance(gram_target, (tf.Tensor, tf.Variable)) or\
                 gram_target.shape != (1, c, c):
             raise TypeError(
-                f"gram_target must be a tensor of shape [1,{c},{c}]")
+                f"gram_target must be a tensor of shape [1, {c}, {c}]")
         gram_style = self.gram_matrix(style_output)
         Csquare = 1/style_output.shape[-1] ** 2
         cost = tf.square(gram_style - gram_target)
