@@ -99,84 +99,68 @@ class NST:
         self.content_feature = cont
 
     def layer_style_cost(self, style_output, gram_target):
-        """ style cost """
-        if not isinstance(style_output, (tf.Tensor, tf.Variable)) or\
-                tf.rank(style_output).numpy() != 4:
-            raise TypeError("style_output must be a tensor of rank 4")
-        c = style_output.shape[-1]
-        if not isinstance(gram_target, (tf.Tensor, tf.Variable)) or\
-                gram_target.shape != (1, c, c):
-            raise TypeError(
-                f"gram_target must be a tensor of shape [1, {c}, {c}]")
-        gram_style = self.gram_matrix(style_output)
-        Csquare = 1/style_output.shape[-1] ** 2
-        cost = tf.square(gram_style - gram_target)
-        return tf.reduce_sum(cost) * Csquare
+        """
+        Calculates the style cost for a single layer
+        Returns: the layer’s style cost
+        """
+        style_output = self.gram_matrix(style_output)
+        style_loss = tf.reduce_mean((style_output-gram_target)**2)
+        return style_loss
 
     def style_cost(self, style_outputs):
-        """ style cost of all style layers"""
-        l = len(self.style_layers)
-        if len(style_outputs) != l:
-            raise TypeError(
-                f"style_outputs must be a list with a length of {l}")
-        weight_per_layer = 1.0 / float(l)
-        style_cost = 0.0
-        for out in range(l):
-            style_layer_cost = self.layer_style_cost(
-                style_outputs[out],
-                self.gram_style_features[out]) * weight_per_layer
-            style_cost += style_layer_cost
+        """
+        Calculates the style cost
+        Returns: the style cost
+        """
+        if len(style_outputs) != len(self.style_layers):
+            raise TypeError("style_outputs must be a list with a length of \
+            {}").format(len(style_layers))
+        style_cost = 0
+        weight_per_layer = 1.0 / len(style_outputs)
+        for i in range(len(style_outputs)):
+            layer_style_cost = self.layer_style_cost(
+                style_outputs[i],
+                self.gram_style_features[i])
+            style_cost += tf.reduce_sum(layer_style_cost) * weight_per_layer
         return style_cost
 
     def content_cost(self, content_output):
-        """ content cost """
-        if not isinstance(content_output, (tf.Tensor, tf.Variable)):
-            raise TypeError("content_output must be a tensor")
-        cont_gram = self.gram_matrix(content_output)
-        cont_target = self.gram_matrix(self.content_feature)
-        h = content_output.shape[1]
-        w = content_output.shape[2]
-        c = content_output.shape[3]
-
-        # Compute content cost
-        mse = tf.square(cont_gram - cont_target)
-        content_cost = tf.reduce_sum(mse) / (4 * h * w * c)
-
+        """
+        Calculate the content cost
+        Returns: the content cost
+        """
+        content_cost = tf.reduce_mean((content_output -
+                                       self.content_feature)**2)
         return content_cost
 
     def total_cost(self, generated_image):
-        """ total cost """
-        generated = tf.convert_to_tensor(generated_image)
-        if (not isinstance(generated, (tf.Tensor, tf.Variable)) or
-                generated.shape != self.content_image.shape):
-            raise TypeError(
-                f"generated_image must be a tensor of shape {self.content_image.shape}")
-
-        gen = tf.keras.applications.vgg19.preprocess_input(
-            generated * 255)
-        out = self.model(gen)
-        content_output = out[len(out) - 1]
-        content_cost = self.content_cost(content_output)
-        style_cost = self.style_cost(out[:len(out) - 1])
-        total_cost = self.alpha * content_cost + self.beta * style_cost
+        """
+        Calculates the total cost for the generated image
+        Returns: total cost, content cost, style cost
+        """
+        if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or \
+           generated_image.shape != self.content_image.shape:
+            raise TypeError("generated_image must be a tensor \
+            of shape {}".format(self.content_image.shape))
+        preprocecced = tf.keras.applications.vgg19.preprocess_input(
+            generated_image * 255)
+        model_outputs = self.model(preprocecced)
+        content_cost = self.content_cost(model_outputs[-1])
+        style_cost = self.style_cost(model_outputs[:5])
+        total_cost = content_cost*self.alpha + style_cost*self.beta
         return total_cost, content_cost, style_cost
 
     def compute_grads(self, generated_image):
         """
-        Calculate gradients
+        Calculates the gradients for the tf.Tensor generated image
+        Returns: gradients, J_total, J_content, J_style
         """
-        # Check if generated_image is a valid tensor with the same shape as content_image
-        generated_image = tf.convert_to_tensor(generated_image)
-        shape = self.content_image.shape
-        if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or\
-                generated_image.shape != shape:
-            raise TypeError(
-                f"generated_image must be a tensor of shape {shape}")
-
-        tot_cost, content_cost, style_cost = self.total_cost(generated_image)
+        if not isinstance(generated_image, (tf.Tensor, tf.Variable)) or \
+           generated_image.shape != self.content_image.shape:
+            raise TypeError("generated_image must be a tensor \
+        of shape {}".format(self.content_image.shape))
+        J_total, J_content, J_style = self.total_cost(generated_image)
         with tf.GradientTape() as tape:
-            tape.watch(generated_image)
-            J_total = self.total_cost(generated_image)[0]
-        gradients = tape.gradient(J_total, generated_image)
-
-        return gradients, tot_cost, content_cost, style_cost
+            loss, _, _ = self.total_cost(generated_image)
+        grads = tape.gradient(loss, generated_image)
+        return grads, J_total, J_content, J_style
