@@ -109,6 +109,7 @@ def adjugate(matrix):
 
     return adjugate_output
 
+
 def inverse(matrix):
     """calculates the inverse of a matrix"""
     if not isinstance(matrix, list) or len(matrix) == 0:
