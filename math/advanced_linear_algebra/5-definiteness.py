@@ -11,6 +11,8 @@ def definiteness(matrix):
         return None
     if matrix.shape[0] != matrix.shape[1]:
         return None
+    if not np.array_equal(matrix.T, matrix):
+        return None
     eigenvalues, eigenvectors = np.linalg.eig(matrix)
     if all(eigenvalues > 0):
         return "Positive definite"
