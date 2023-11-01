@@ -84,6 +84,7 @@ def cofactor(matrix):
 
     return minor_output
 
+
 def adjugate(matrix):
     """calculates the adjugate matrix of a matrix
     wich is the transpose of the cofactor matrix"""
