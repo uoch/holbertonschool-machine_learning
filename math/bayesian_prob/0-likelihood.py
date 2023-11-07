@@ -27,6 +27,6 @@ def likelihood(x, n, P):
     # likelihood = pmf * (P ** x) * ((1 - P) ** (n - x))
     # pmf * (P ** x) is the probability of x given n and P
     # (1 - P) ** (n - x) is the probability of n - x given n and P
-    likelihood = pmf * (P ** x) * ((1 - P) ** (n - x))
+    likelihood = pmf * (P * x) * ((1 - P) ** (n - x))
 
     return likelihood
