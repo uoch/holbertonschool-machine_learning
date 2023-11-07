@@ -26,9 +26,9 @@ def intersection(x, n, P, Pr):
         raise ValueError(f'All values in {P} must be in the range [0, 1]')
     if np.isclose(np.sum(Pr), 1) is False:
         raise ValueError('Pr must sum to 1')
-    # likelihood = likelihood(x, n, P)
+    # pmf is the probability mass function of a binomial dist for n and x
+    # likelihood = pmf * (P ** x) * ((1 - P) ** (n - x))
     # intersection = likelihood * Pr
-    # intersection = np.sum(intersection)
     pmf = np.math.factorial(n) / (np.math.factorial(x)
                                   * np.math.factorial(n - x))
     likelihood = pmf * (P ** x) * ((1 - P) ** (n - x))
