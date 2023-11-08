@@ -17,6 +17,5 @@ def pca(X, var=0.95):
         k += s[i]
         r += 1
         if k >= var:
-            r +=1
             break
     return weights_matrix[:, :r+1]
