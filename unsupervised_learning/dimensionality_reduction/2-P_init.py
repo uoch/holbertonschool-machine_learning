@@ -15,7 +15,7 @@ def P_init(X, perplexity):
     for i in range(n):
         for j in range(n):
             if i != j:
-                D[i][j] = np.linalg.norm(X[i] - X[j])
+                D[i][j] = (np.linalg.norm(X[i] - X[j]))**2
     P = np.zeros((n, n))
     betas = np.ones((n, 1))
 
