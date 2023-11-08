@@ -11,11 +11,13 @@ def pca(X, var=0.95):
     u, s, vh = np.linalg.svd(X)
     weights_matrix = vh.T
     # determine number of components to keep
+    S_norm = s/np.sum(s)
     k = 0
     r = 0
     for i in range(len(s)):
-        k += s[i]
+        k += S_norm[i]
         r += 1
         if k >= var:
+            r+=1
             break
     return weights_matrix[:, :r+1]
