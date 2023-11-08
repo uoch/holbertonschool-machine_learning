@@ -7,7 +7,7 @@ def pca(X, var=0.95):
     """performs PCA on a dataset
     X ndarray (n, d) dataset
     var fraction of variance that PCA transformation should maintain"""
-    n,d = X.shape
+    n, d = X.shape
     u, s, vh = np.linalg.svd(X)
     weights_matrix = vh.T
     # determine number of components to keep
