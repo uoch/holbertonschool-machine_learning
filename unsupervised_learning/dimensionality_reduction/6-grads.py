@@ -13,4 +13,4 @@ def grads(Y, P):
     Y_diff = Y[:, np.newaxis, :] - Y
     dY = -np.sum((PQ * num)[:, :, np.newaxis] * Y_diff[:, :, :], axis=0)
 
-    return -dY, Q
+    return dY, Q
