@@ -16,7 +16,7 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
         Hi, Pi = HP(Di, betas[i])
         # binary search
         H_diff = Hi - H
-        while np.abs(H_diff > tol):
+        while np.abs(H_diff) > tol:
             if H_diff > 0:
                 low = betas[i, 0]
                 if high is None:
@@ -29,10 +29,8 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                     betas[i, 0] = betas[i, 0] / 2
                 else:
                     betas[i, 0] = (betas[i, 0] + low) / 2
-            # update Hi and Pi for the current point
             Hi, Pi = HP(Di, betas[i])
             H_diff = Hi - H
         # update P
-        P[i, :i] = Pi[:i]
-        P[i, i+1:] = Pi[i:]
-    return (P.T+P)/(2*n)
+        P[i, np.arange(n) != i] = Pi
+    return (P + P.T) / (2 * n)
