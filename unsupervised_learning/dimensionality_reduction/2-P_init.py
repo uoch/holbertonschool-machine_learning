@@ -12,10 +12,9 @@ def P_init(X, perplexity):
     n, d = X.shape
     D = np.zeros((n, n))
 
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                D[i][j] = (np.linalg.norm(X[i] - X[j]))**2
+    diff = X[np.newaxis, :, :] - X[:, np.newaxis, :]
+    D = np.sum(np.square(diff), axis=2)
+    np.fill_diagonal(D, 0)
     P = np.zeros((n, n))
     betas = np.ones((n, 1))
 
