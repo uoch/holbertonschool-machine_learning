@@ -8,12 +8,12 @@ def Q_affinities(Y):
     n, ndim = Y.shape
     Q = np.zeros((n, n))
     # pairwise distance
-    D = np.zeros((n, n))
-    for i in range(n):
-        for j in range(n):
-            if i != j:
-                D[i][j] = (np.linalg.norm(Y[i] - Y[j]))**2
-    num = (1 + D)**(-1)
-    den = np.sum(num)
-    Q = num / den
+    #for i in range(n):
+    #   for j in range(n):
+    #        if i != j:
+    diff = Y[np.newaxis, :, :] - Y[:, np.newaxis, :]
+    D = np.sum(np.square(diff), axis=2)
+    num = (1 + D) ** (-1)
+    np.fill_diagonal(num, 0)
+    Q = num / np.sum(num)
     return Q, num
