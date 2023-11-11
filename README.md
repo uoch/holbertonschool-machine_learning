@@ -47,12 +47,7 @@ Mathematical and Statistical foundations
 |Deep CNN|
 |Transfer Learning|
 |Object Detection|
-|Recurrent Neural Network (RNN)|
-|Time Series|
-|Word Embeddings|
-|Natural Language Processing metrics|
-|Attention|
-|Transformers APPs|
+
 
 ## Unsupervised Learning 📖
 
