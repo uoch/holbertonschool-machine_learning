@@ -1,4 +1,4 @@
-# 0x0C. Neural Style Transfer
+# Neural Style Transfer
 
 <p align="center">
   <img src="starry_night.jpg">
