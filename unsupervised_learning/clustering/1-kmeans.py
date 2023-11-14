@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """clustering"""
 import numpy as np
-initialize = __import__('0-initialize').initialize
 
 
 def kmeans(X, k, iterations=1000):
@@ -11,7 +10,8 @@ def kmeans(X, k, iterations=1000):
     if not isinstance(k, int) or k <= 0:
         return None, None
 
-    C = initialize(X, k)
+    C = np.random.uniform(np.amin(X, axis=0),
+                          np.amax(X, axis=0), (k, X.shape[1]))
     if C is None:
         return None, None
 
@@ -24,7 +24,7 @@ def kmeans(X, k, iterations=1000):
         for j in range(k):
             # if no data points assigned to cluster j, leave it unchanged
             if X[clusters == j].size == 0:
-                C[j] = initialize(X, 1)
+                C[j] = C_copy[j]
             else:
                 # else, mean of all data points assigned to cluster j
                 C[j] = np.mean(X[clusters == j], axis=0)
