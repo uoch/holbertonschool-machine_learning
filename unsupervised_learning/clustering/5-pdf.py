@@ -8,6 +8,12 @@ def pdf(X, m, S):
     X ndarray (n, d) data points to evaluate
     m ndarray (d,) mean of distribution
     S ndarray (d, d) covariance of distribution"""
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+        return None
+    if not isinstance(m, np.ndarray) or len(m.shape) != 1:
+        return None
+    if not isinstance(S, np.ndarray) or len(S.shape) != 2:
+        return None
 
     d = X.shape[1]
     X_m = X - m
