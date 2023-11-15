@@ -35,5 +35,5 @@ def expectation(X, pi, m, S):
         g[i] = pdf(X, m[i], S[i]) * pi[i]
     g_sum = np.sum(g, axis=0)
     g /= g_sum
-    l = np.sum(np.log(g_sum))
-    return g, l
+    loo = np.sum(np.log(g_sum))
+    return g, loo
