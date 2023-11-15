@@ -7,8 +7,13 @@ def maximization(X, g):
     """calculates the maximization step in the EM algorithm for a GMM"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
-    if not isinstance(g, np.ndarray) or len(g.shape) != 2\
-            or g.shape[1] != X.shape[0] or np.sum(g, axis=1).all() != 1:
+    if not isinstance(g, np.ndarray) or len(g.shape) != 2:
+        return None, None, None
+    if g.shape[1] != X.shape[0]:
+        return None, None, None
+    cluster = np.sum(g, axis=0)
+    cluster = np.sum(cluster)
+    if int(cluster) != X.shape[0]:
         return None, None, None
     n, d = X.shape
     k = g.shape[0]
