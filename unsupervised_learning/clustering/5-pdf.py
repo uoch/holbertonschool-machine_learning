@@ -10,9 +10,11 @@ def pdf(X, m, S):
     S ndarray (d, d) covariance of distribution"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
-    if not isinstance(m, np.ndarray) or len(m.shape) != 1:
+    if not isinstance(m, np.ndarray) or len(m.shape) != 1\
+            or m.shape[0] != X.shape[1]:
         return None
-    if not isinstance(S, np.ndarray) or len(S.shape) != 2:
+    if not isinstance(S, np.ndarray) or len(S.shape) != 2 \
+            or S.shape[0] != S.shape[1] or S.shape[0] != X.shape[1]:
         return None
 
     d = X.shape[1]
