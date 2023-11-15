@@ -22,8 +22,6 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     if kmin <= 0 or kmax <= 0 or kmax <= kmin:
         return None, None
 
-    n = X.shape[0]
-    
     vp = 0.0
     results = []
     d_vars = []
@@ -43,4 +41,3 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     d_vars = np.array(d_vars).tolist()
 
     return results, d_vars
-
