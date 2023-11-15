@@ -16,11 +16,19 @@ def expectation(X, pi, m, S):
         p = pdf(X, m, S) * pi/np.sum(pdf(X, m, S) * pi, axis=0)"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
-    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
-        return None, None
     if not isinstance(m, np.ndarray) or len(m.shape) != 2:
         return None, None
     if not isinstance(S, np.ndarray) or len(S.shape) != 3:
+        return None, None
+    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
+        return None, None
+    if m.shape[1] != X.shape[1]:
+        return None, None
+    if S.shape[1] != X.shape[1] or X.shape[1] != S.shape[2]:
+        return None, None
+    if pi.shape[0] != m.shape[0] or pi.shape[0] != S.shape[0]:
+        return None, None
+    if not np.isclose([np.sum(pi)], [1])[0]:
         return None, None
     g = np.zeros((m.shape[0], X.shape[0]))
     for i in range(m.shape[0]):
