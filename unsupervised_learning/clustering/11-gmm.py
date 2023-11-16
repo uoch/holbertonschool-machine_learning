@@ -3,7 +3,7 @@
 import sklearn.mixture
 
 
-def gmm(X,k):
+def gmm(X, k):
     """performs K-means on a dataset"""
     gmm = sklearn.mixture.GaussianMixture(n_components=k).fit(X)
     pi = gmm.weights_
