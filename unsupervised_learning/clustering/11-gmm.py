@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """clustering"""
-import sklearn.cluster
+import sklearn.mixture
 
 
 def gmm(X,k):
