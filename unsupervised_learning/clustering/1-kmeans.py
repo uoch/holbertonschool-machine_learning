@@ -17,20 +17,21 @@ def kmeans(X, k, iterations=1000):
         return None, None
 
     for _ in range(iterations):
-        # Calculate distances between data points and centroids
-        distances = np.linalg.norm(X[:, None] - centroids, axis=-1)
+        C_copy = np.copy(C)
+
+        distances = np.linalg.norm(X[:, None] - C_copy, axis=-1)
         clusters = np.argmin(distances, axis=-1)
 
-        new_centroids = np.array([X[clusters == j].mean(axis=0)
-                                  if np.any(clusters == j)
-                                  else np.random.uniform(
-            np.amin(X, axis=0),
-            np.amax(X, axis=0),
-            (X.shape[1],)) for j in range(k)])
+        for j in range(k):
+            # if no data points assigned to cluster j, leave it unchanged
+            if X[clusters == j].size == 0:
+                C[j] = np.random.uniform(np.amin(X, axis=0),
+                                         np.amax(X, axis=0), (1, X.shape[1]))
+            else:
+                # else, mean of all data points assigned to cluster j
+                C[j] = np.mean(X[clusters == j], axis=0)
 
-        if np.array_equal(centroids, new_centroids):
+        if np.array_equal(C, C_copy):
             break
 
-        centroids = new_centroids
-
-    return centroids, clusters
+    return C, clusters
