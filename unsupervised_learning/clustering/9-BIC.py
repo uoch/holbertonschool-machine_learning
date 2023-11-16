@@ -23,7 +23,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
             pi, m, S, _, lk = expectation_maximization(
                 X, k, iterations, tol, verbose)
             lik_list.append(lk)
-            p = k * (d + d * (d + 1) // 2 + 1)
+            p = k * (d + 2) * (d + 1) / 2 - 1
             bic = p * np.log(n) - 2 * lk
             bic_list.append(bic)
 
