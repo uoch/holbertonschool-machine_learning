@@ -6,10 +6,11 @@ expectation_maximization = __import__('8-EM').expectation_maximization
 
 def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """Find the best number of clusters for a GMM using BIC"""
-    if kmax is None:
-        kmax = X.shape[0]
     if type(X) is not np.ndarray or X.ndim != 2:
         return None, None, None, None
+    if kmax is None:
+        kmax = X.shape[0]
+
     n, d = X.shape
     if type(kmin) is not int or kmin != int(kmin) or kmin < 1:
         return None, None, None, None
@@ -19,7 +20,8 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
         return None, None, None, None
     if kmax <= kmin:
         return None, None, None, None
-    if type(iterations) is not int or iterations != int(iterations) or iterations < 1:
+    if type(iterations) is not int or iterations != int(iterations) \
+            or iterations < 1:
         return None, None, None, None
     if type(tol) is not float or tol < 0:
         return None, None, None, None
