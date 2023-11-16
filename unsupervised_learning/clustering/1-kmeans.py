@@ -21,8 +21,12 @@ def kmeans(X, k, iterations=1000):
         distances = np.linalg.norm(X[:, None] - centroids, axis=-1)
         clusters = np.argmin(distances, axis=-1)
 
-        new_centroids = np.array([X[clusters == j].mean(axis=0) if np.any(clusters == j) else np.random.uniform(
-            np.amin(X, axis=0), np.amax(X, axis=0), (X.shape[1],)) for j in range(k)])
+        new_centroids = np.array([X[clusters == j].mean(axis=0)
+                                  if np.any(clusters == j)
+                                  else np.random.uniform(
+            np.amin(X, axis=0),
+            np.amax(X, axis=0),
+            (X.shape[1],)) for j in range(k)])
 
         if np.array_equal(centroids, new_centroids):
             break
