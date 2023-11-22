@@ -15,7 +15,7 @@ def regular(P):
         return None
     evals, evecs = np.linalg.eig(P.T)
     # get eigenvalues equal to 1
-    index = np.where(np.abs(evals - 1) < 1e-8)[0]
+    index = np.where(np.abs(evals - 1) < 1e-8)
     # get the eigenvector
     evecs = evecs[:, index]
     steady = evecs / evecs.sum()
