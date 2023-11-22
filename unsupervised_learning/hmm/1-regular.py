@@ -19,4 +19,4 @@ def regular(P):
     # get the eigenvector
     evecs = evecs[:, index]
     steady = evecs / evecs.sum()
-    return steady
+    return steady.T
