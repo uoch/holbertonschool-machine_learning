@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""markov hidden model"""
+
 import numpy as np
 
 
@@ -35,7 +37,8 @@ def forward(Observation, Emission, Transition, Initial):
     for t in range(1, T):
         for j in range(N):
             alpha[j, t] = np.sum(
-                alpha[:, t - 1] * Transition[:, j]) * Emission[j, Observation[t]]
+                alpha[:, t - 1] * Transition[:, j]) *\
+                      Emission[j, Observation[t]]
 
     P = np.sum(alpha[:, T - 1])
     return P, alpha
