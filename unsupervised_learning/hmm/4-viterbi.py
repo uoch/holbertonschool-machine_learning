@@ -23,7 +23,8 @@ def viterbi(Observation, Emission, Transition, Initial):
         for t in range(1, T):
             for j in range(N):
                 viterbi[j, t] = np.max(
-                    viterbi[:, t - 1] * Transition[:, j]) * Emission[j, Observation[t]]
+                    viterbi[:, t - 1] * Transition[:, j]) *\
+                    Emission[j, Observation[t]]
                 backpointer[j, t] = np.argmax(
                     viterbi[:, t - 1] * Transition[:, j])
         path = [0] * T
