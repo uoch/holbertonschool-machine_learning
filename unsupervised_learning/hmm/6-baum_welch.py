@@ -99,7 +99,7 @@ def gamma_zeta(X, Emission, Transition, Initial):
     Compute gamma and zeta values in Baum-Welch algorithm.
     gamma[i, t] = P(Z_t = i | X, model)
     zeta[i, j, t] = P(Z_t = i, Z_{t+1} = j | X, model)
-    Zeta calculation for t: 
+    Zeta calculation for t:
     zeta[i, j, t] = alpha[i, t] * A[i, j] * B[j, X[t+1]] * beta[j, t+1]
     """
     _, alpha = forward(X, Emission, Transition, Initial)
@@ -124,7 +124,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     Transition[i, j] = sum(zeta[i, j, t]) / sum(gamma[i, t])
     (where t is from 0 to T-1)
     Update Emission matrix using gamma and observations Formula:
-    Emission[i, k] = sum(gamma[i, t] where Observations[t] = k) / sum(gamma[i, t])
+    Emission[i, k] = sum(gamma[i, t]
+    where Observations[t] = k) / sum(gamma[i, t])
     (where t is from 0 to T-1)
     """
     if not isinstance(Observations, np.ndarray) or Observations.ndim != 1:
