@@ -17,7 +17,7 @@ class GaussianProcess:
         self.K = self.kernel(self.X, self.X)
 
     def kernel(self, X1, X2):
-        """kernel function 
+        """kernel function
         X1: numpy.ndarray shape(m, 1)
         X2: numpy.ndarray shape(n, 1)
         k = sigma_f^2 * exp(-0.5 / l^2 * (x1 - x2)^2)
