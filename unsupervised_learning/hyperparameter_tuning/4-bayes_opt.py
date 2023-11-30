@@ -5,7 +5,6 @@ from scipy.stats import norm
 GP = __import__('2-gp').GaussianProcess
 
 
-
 class BayesianOptimization:
     """Bayesian optimization"""
 
@@ -24,20 +23,17 @@ class BayesianOptimization:
         # self.X_s = np.linspace(bo[0],bo[1],ac_samples).reshape((-1, 1))
         self.X_s = np.array(
             [bounds[0] + i * step for i in range(ac_samples)])[:, np.newaxis]
+
     def acquisition(self):
         """calculates the next best sample location"""
         mu, sigma = self.gp.predict(self.X_s)
-        x_star = np.max(self.gp.Y)
         if self.minimize is True:
-            mu_sample_opt = np.min(self.gp.Y)
-            mu_sample_opt = x_star - mu_sample_opt
+            Y_s = np.min(self.gp.Y)
+            imp = Y_s - mu - self.xsi
         else:
-            mu_sample_opt = np.max(self.gp.Y)
-            mu_sample_opt = mu_sample_opt - x_star
-        with np.errstate(divide='warn'):
-            imp = mu - mu_sample_opt - self.xsi
-            Z = imp / sigma
-            ei = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
-            ei[sigma == 0.0] = 0.0
-        X_next = self.X_s[np.argmax(ei)]
-        return X_next, ei
+            Y_s = np.max(self.gp.Y)
+            imp = mu - Y_s - self.xsi
+        Z = imp / sigma
+        EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
+        X_next = self.X_s[np.argmax(EI)]
+        return X_next, EI
