@@ -28,9 +28,11 @@ class BayesianOptimization:
         """calculates the next best sample location"""
         mu, sigma = self.gp.predict(self.X_s)
         if self.minimize is True:
+            # Y_s is the lowest point seen so far U+
             Y_s = np.min(self.gp.Y)
             imp = Y_s - mu - self.xsi
         else:
+            # Y_s is the highest point seen so far U-
             Y_s = np.max(self.gp.Y)
             imp = mu - Y_s - self.xsi
         Z = imp / sigma
