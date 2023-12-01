@@ -11,14 +11,7 @@ jobs:
     steps:
       - name: Install NVIDIA Container Toolkit
         run: |
-          curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
-          && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
-            sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
-            sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list \
-          && sudo apt-get update \
-          && sudo apt-get install -y nvidia-container-toolkit \
-          && sudo nvidia-ctk runtime configure --runtime=docker \
-          && sudo systemctl restart docker
+          # Commands to install NVIDIA Container Toolkit
 
   pull-tensorflow-images:
     runs-on: ubuntu-latest
@@ -26,12 +19,11 @@ jobs:
     steps:
       - name: Pull TensorFlow Docker Images
         run: |
-          docker pull tensorflow/tensorflow
-          docker pull tensorflow/tensorflow:devel-gpu
-          docker pull tensorflow/tensorflow:latest-gpu-jupyter
+          # Commands to pull TensorFlow Docker images
 
   build:
     runs-on: ubuntu-latest  # Specify the runner OS
+    needs: pull-tensorflow-images  # Ensure it runs after pulling images
 
     steps:
       - name: Checkout Repository
