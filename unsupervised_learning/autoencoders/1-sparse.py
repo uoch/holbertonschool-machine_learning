@@ -3,39 +3,38 @@
 import tensorflow.keras as K
 
 
-def create_model(input_dim, layers, d=True):
-    """Creates a basic encoder or decoder model"""
+def create_model(input_dim, layers, latent, lambtha, d=True):
+    """basic encoder model"""
     inputs = K.Input(shape=(input_dim,))
-    x = inputs
+    reg = K.regularizers.l1(lambtha)
     for i, layer in enumerate(layers):
-        x = K.layers.Dense(layer, activation='relu')(x) if i < len(
-            layers) - 1 else K.layers.Dense(layer, activation='sigmoid')(x)
-    return K.Model(inputs, x)
+        if layer == layers[0]:
+            output = K.layers.Dense(
+                layer, activation='relu', kernel_regularizer=reg)(inputs)
+        else:
+            output = K.layers.Dense(
+                layer, activation='relu', kernel_regularizer=reg)(output)
+        if d and i == len(layers) - 1:
+            output = K.layers.Dense(
+                latent, activation='sigmoid', kernel_regularizer=reg)(output)
+    return inputs, output
 
 
 def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
-    """Creates a sparse autoencoder model"""
-    # Encoder
-    inputs = K.Input(shape=(input_dims,))
-    encoded = create_model(input_dims, hidden_layers +
-                           [latent_dims], d=False)(inputs)
-
-    # Regularization for sparsity
-    reg = K.regularizers.l1(lambtha)
-    regularizer = reg(encoded)
-    # Applying regularization to the encoded output
-    encoded = K.layers.Lambda(lambda x: x + regularizer)(encoded)
-
-    # Decoder
+    """creates an  vanilla model"""
     hidden_layers_inv = list(reversed(hidden_layers))
-    decoded = create_model(
-        latent_dims, hidden_layers_inv + [input_dims], d=True)(encoded)
+    reg1 = K.regularizers.l1(lambtha)
+    inputs, encoder = create_model(
+        input_dims, hidden_layers, latent_dims, d=False)
+    inputs_dec, decoder = create_model(
+        latent_dims, hidden_layers_inv, input_dims, d=True)
+    latent = K.layers.Dense(latent_dims, activation='relu',
+                            kernel_regularizer=reg1)(encoder)
+    encoder_model = K.Model(inputs, latent)
+    decoder_model = K.Model(inputs_dec, decoder)
+    autoencoder_model = K.Model(inputs, decoder_model(encoder_model(inputs)))
 
-    encoder = K.Model(inputs, encoded)
-    decoder = K.Model(encoded, decoded)
-    autoencoder_model = K.Model(inputs, decoder(encoder(inputs)))
-
-    # Compile the autoencoder model
+    # Compile the model
     autoencoder_model.compile(optimizer='adam', loss='binary_crossentropy')
 
-    return encoder, decoder, autoencoder_model
+    return encoder_model, decoder_model, autoencoder_model
