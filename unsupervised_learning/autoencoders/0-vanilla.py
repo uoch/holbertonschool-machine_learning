@@ -4,6 +4,7 @@ import tensorflow.keras as K
 
 
 def create_model(input_dim, layers, latent, d=True):
+    """basic encoder model"""
     inputs = K.Input(shape=(input_dim,))
     for i, layer in enumerate(layers):
         if layer == layers[0]:
@@ -16,6 +17,7 @@ def create_model(input_dim, layers, latent, d=True):
 
 
 def autoencoder(input_dims, hidden_layers, latent_dims):
+    """creates an  vanilla model"""
     hidden_layers_inv = list(reversed(hidden_layers))
     inputs, encoder = create_model(
         input_dims, hidden_layers, latent_dims, d=False)
