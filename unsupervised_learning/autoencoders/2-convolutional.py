@@ -4,6 +4,7 @@ import tensorflow.keras as K
 
 
 def create_model(input_dims, filters, latent_dims, d=True):
+    """creates a convolutional autoencoder"""
     revfilt = filters[::-1]
     # Encoder
     if not d:
@@ -26,7 +27,7 @@ def create_model(input_dims, filters, latent_dims, d=True):
                 padding='same')(output)
             output = K.layers.UpSampling2D((2, 2))(output)
         output = K.layers.Conv2D(
-            filters=filters[-2],
+            filters=filters[0],
             kernel_size=(3, 3),
             activation='relu',
             padding='valid')(output)
