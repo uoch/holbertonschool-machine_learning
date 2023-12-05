@@ -23,12 +23,10 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     inputs_dec, decoder = create_model(
         latent_dims, list(reversed(hidden_layers)), input_dims, d=True)
     latent = K.layers.Dense(latent_dims, activation='relu',
-                            activity_regularizer=K.regularizers.l1(lambtha))(encoder)
+                            activity_regularizer=reg)(encoder)
     encoder_model = K.Model(inputs, latent)
-    print(encoder_model.summary())
     decoder_model = K.Model(inputs_dec, decoder)
     autoencoder_model = K.Model(inputs, decoder_model(encoder_model(inputs)))
-    print(autoencoder_model.summary())
 
     # Compile the model
     autoencoder_model.compile(optimizer='adam', loss='binary_crossentropy')
