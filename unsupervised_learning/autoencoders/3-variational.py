@@ -24,7 +24,7 @@ class VAE_LossLayer(K.layers.Layer):
 
         # KL divergence loss
         kl_loss = -0.5 * tf.reduce_sum(1 + latent_log_var -
-                                       tf.square(latent_mean) - tf.exp(latent_log_var), axis=-1)
+                tf.square(latent_mean) - tf.exp(latent_log_var), axis=-1)
 
         # Total VAE loss
         loss = tf.reduce_mean(reconstruction_loss + kl_loss)
