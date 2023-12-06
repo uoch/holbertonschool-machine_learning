@@ -1,4 +1,4 @@
-name: Object Detection Workflow
+"name: Object Detection Workflow
 
 on:
   push:
@@ -47,4 +47,4 @@ jobs:
       - name: Run Object Detection
         run: |
           docker run --rm --device=/dev/video0 my_tensorflow_app
-          # Command to run object detection script within the container
+          # Command to run object detection script within the container"
