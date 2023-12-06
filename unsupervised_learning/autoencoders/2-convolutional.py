@@ -5,7 +5,6 @@ import tensorflow.keras as K
 
 def create_model(input_dims, filters, latent_dims, d=True):
     """creates a convolutional autoencoder"""
-    revfilt = filters[::-1]
     # Encoder
     if not d:
         inputs = K.Input(shape=input_dims)
@@ -19,24 +18,28 @@ def create_model(input_dims, filters, latent_dims, d=True):
     else:
         inputs = K.Input(shape=latent_dims)
         output = inputs
-        for filter in revfilt[1:]:
+        for filter in reversed(filters[1:]):
             output = K.layers.Conv2D(
-                filter, (3, 3),
-                activation='relu',
+                filters=filter,
+                kernel_size=(3, 3),
                 strides=(1, 1),
-                padding='same')(output)
+                padding="same",
+                activation="relu",
+            )(output)
             output = K.layers.UpSampling2D((2, 2))(output)
         output = K.layers.Conv2D(
             filters=filters[0],
             kernel_size=(3, 3),
-            activation='relu',
-            padding='valid')(output)
-        output = K.layers.UpSampling2D((2, 2))(output)
-        output = K.layers.Conv2D(
-            filters=input_dims[-1],
-            kernel_size=(3, 3),
-            activation='sigmoid',
-            padding='same')(output)
+            strides=(1, 1),
+            padding="valid",
+            activation="relu",)(output)
+        output = K.layers.UpSampling2D(size=(2, 2))(output)
+        output = K.layers.Conv2D(filters=input_dims[-1],
+                                 kernel_size=(3, 3),
+                                 strides=(1, 1),
+                                 padding="same",
+                                 activation="sigmoid",
+                                 )(output)
         return K.Model(inputs, output)
 
 
