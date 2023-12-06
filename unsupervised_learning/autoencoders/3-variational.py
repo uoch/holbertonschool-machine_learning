@@ -16,15 +16,15 @@ class VAE_LossLayer(K.layers.Layer):
         Args:
             inputs: list containing
                     [inputs, outputs, latent_mean, latent_log_var]"""
-        inputs, outputs, latent_mean, latent_log_var = inputs
+        inputs, outputs, mu, var = inputs
 
         # Reconstruction loss
         reconstruction_loss = tf.keras.losses.binary_crossentropy(
             inputs, outputs)
 
         # KL divergence loss
-        kl_loss = -0.5 * tf.reduce_sum(1 + latent_log_var -
-                    tf.square(latent_mean) - tf.exp(latent_log_var), axis=-1)
+        kl_loss = -0.5 * tf.reduce_sum(1 + mu -
+                                       tf.square(mu) - tf.exp(var), axis=-1)
 
         # Total VAE loss
         loss = tf.reduce_mean(reconstruction_loss + kl_loss)
