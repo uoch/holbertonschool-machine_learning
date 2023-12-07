@@ -36,7 +36,8 @@ def sampling(args):
 
 def vae_loss(input_img, output, mean, log_stddev):
     """vector autoencoder loss function"""
-    reconstruction_loss = K.backend.sum(K.backend.square(output - input_img))
+    reconstruction_loss = K.backend.sum(K.backend.binary_crossentropy(input_img, output), axis=1
+            )
 
     # Compute the KL loss
     kl_loss = -0.5 * K.backend.sum(1 + log_stddev - K.backend.square(
