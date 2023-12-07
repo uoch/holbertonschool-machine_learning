@@ -36,8 +36,8 @@ def sampling(args):
 
 def vae_loss(input_img, output, mean, log_stddev):
     """vector autoencoder loss function"""
-    reconstruction_loss = K.backend.sum(K.backend.binary_crossentropy(input_img, output), axis=1
-            )
+    reconstruction_loss = K.backend.sum(
+        K.backend.binary_crossentropy(input_img, output), axis=1)
 
     # Compute the KL loss
     kl_loss = -0.5 * K.backend.sum(1 + log_stddev - K.backend.square(
@@ -67,11 +67,11 @@ def autoencoder(input_dims, hidden_layers, latent_dims):
 
     # Combined autoencoder model
     autoencoder_input = K.Input(shape=(input_dims,))
-    _, _, latent_z = encoder_model(autoencoder_input)
+    mu, logsig, latent_z = encoder_model(autoencoder_input)
     reconstructed_output = decoder_model(latent_z)
 
     # Calculate loss using the custom loss function
-    loss_value = vae_loss(autoencoder_input, reconstructed_output, _, _)
+    loss_value = vae_loss(autoencoder_input, reconstructed_output, mu, logsig)
 
     # Combined model with VAE loss
     autoencoder_model = K.Model(autoencoder_input, reconstructed_output)
