@@ -35,15 +35,15 @@ def sampling(args):
 
 
 def vae_loss(input_img, output, mean, log_stddev):
-    # Reconstruction loss
+    """vector autoencoder loss function"""
     reconstruction_loss = K.backend.sum(
         K.backend.binary_crossentropy(input_img, output), axis=1)
 
-    # KL divergence
-    kl_loss = -0.5 * K.backend.sum(
-        1 + log_stddev - K.backend.square(mean) - K.backend.square(K.backend.exp(log_stddev)), axis=-1)
+    # Compute the KL loss
+    kl_loss = -0.5 * K.backend.sum(1 + log_stddev - K.backend.square(
+        mean) - K.backend.square(K.backend.exp(log_stddev)), axis=-1)
 
-    # Calculate the total VAE loss (sum of reconstruction and KL divergence)
+    # Return the average loss over all images in the batch
     total_loss = K.backend.mean(reconstruction_loss + kl_loss)
     return total_loss
 
