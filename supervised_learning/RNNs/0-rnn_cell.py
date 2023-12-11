@@ -4,7 +4,7 @@ import numpy as np
 
 
 def softmax(x):
-    """softmax"""
+    """softmax activation function"""
     return np.exp(x) / np.sum(np.exp(x), axis=1, keepdims=True)
 
 
@@ -12,7 +12,7 @@ class RNNCell:
     """Rnn cell class"""
 
     def __init__(self, i, h, o):
-        """constructor"""
+        """constructor for simple rnn cell"""
         self.Wh = np.random.randn(h + i, h)
         self.bh = np.zeros((1, h))
         self.Wy = np.random.randn(h, o)
