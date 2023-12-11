@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Rnns"""
+"""Rucurrent Neural Network"""
 import numpy as np
 
 
