@@ -14,6 +14,7 @@ def softmax(x):
 
 
 def rnn_layer(x, h):
+    """builds a recurrent neural network layer"""
     return np.matmul(x, h)
 
 
