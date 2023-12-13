@@ -20,13 +20,16 @@ def rnn_layer(x, h):
 
 class BidirectionalCell:
     """bidirectional cell"""
+
     def __init__(self, i, h, o):
         self.Whf = np.random.normal(size=(h + i, h))
         self.bhf = np.zeros((1, h))
         self.Whb = np.random.normal(size=(h + i, h))
         self.bhb = np.zeros((1, h))
+        # output size is 2h because it is the concat of forward and backward
         self.Wy = np.random.normal(size=(2*h, o))
         self.by = np.zeros((1, o))
+
     def forward(self, h_prev, x_t):
         """forward prop"""
         ht = np.concatenate((h_prev, x_t), axis=1)
