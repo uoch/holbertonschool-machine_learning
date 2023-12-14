@@ -43,5 +43,10 @@ class BidirectionalCell:
         return h_prev
 
     def output(self, H):
+        """output of bidirectional cell"""
         t, batch, _ = H.shape
         y = np.zeros((t, batch, self.by.shape[1]))
+        for step in range(t):
+            y[step] = softmax(np.matmul(H[step], self.Wy) + self.by)
+
+        return y
