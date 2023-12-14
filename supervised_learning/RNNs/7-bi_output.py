@@ -44,7 +44,4 @@ class BidirectionalCell:
 
     def output(self, H):
         t, batch, _ = H.shape
-        y = np.zeros((t, batch, self.Wy.shape[1]))
-        for time in range(t):
-            y = softmax(np.matmul(H[time], self.Wy) + self.by)
-        return y
+        y = np.zeros((t, batch, self.by.shape[1]))
