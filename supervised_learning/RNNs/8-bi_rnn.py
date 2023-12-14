@@ -16,9 +16,9 @@ def bi_rnn(bi_cell, X, h_0, h_t):
     hb[-1] = h_t
 
     for step in range(t):
-        hf[step + 1] = bi_cell.forward(hf[step], X[step, :, :])
+        hf[step + 1] = bi_cell.forward(hf[step], X[step])
     for step in range(t - 1, -1, -1):
-        hb[step] = bi_cell.backward(hb[step + 1], X[step, :, :])
+        hb[step] = bi_cell.backward(hb[step + 1], X[step])
 
     H = np.concatenate((hf[1:], hb[:-1]), axis=-1)
     Y = bi_cell.output(H)
