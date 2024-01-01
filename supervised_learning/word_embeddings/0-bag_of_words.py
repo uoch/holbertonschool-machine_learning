@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""0. Bag Of Words"""
 import numpy as np
 import re
 
