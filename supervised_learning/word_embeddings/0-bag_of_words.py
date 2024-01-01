@@ -25,4 +25,4 @@ def bag_of_words(sentences, vocab=None):
         for word in cleaned_sentence:
             if word in vocab:
                 embeddings[i, vocab.index(word)] += 1
-    return embeddings, vocab
+    return embeddings.astype(int), vocab
