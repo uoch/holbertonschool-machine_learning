@@ -1,41 +1,28 @@
-#!/usr/bin/env python3
-"""word embedding"""
 import numpy as np
+import re
 
 
-def clean_string(word):
-    """cleans a string"""
-    word = word.lower()
-    word = word.strip()
-    word = word.strip('.')
-    word = word.strip('!')
-    word = word.strip('?')
-    word = word.strip(',')
-    word = word.strip(':')
-    word = word.strip(';')
-    return word
+def clean_sentence(sentences):
+    """Clean sentence before embedding"""
+    words = []
+    for sentence in sentences:
+        words.extend(re.sub(r"\b\w{1}\b", "", re.sub(
+            r"[^a-zA-Z0-9\s]", " ", sentence.lower())).split())
+    return words
 
 
 def bag_of_words(sentences, vocab=None):
-    """transforms sentences to a bag of words embedding matrix"""
+    """creates a bag of words embedding matrix"""
     if vocab is None:
-        vocab = set(clean_string(word)
-                    for sent in sentences for word in sent.split())
-
-    features = list(vocab)
-    s = len(sentences)
-    f = len(features)
-
-    # Initialize the embeddings matrix
-    embeddings = np.zeros((s, f), dtype=int)
-
-    # Loop through sentences and words to fill the embeddings matrix
+        vocab = []
+    sentence_words = clean_sentence(sentences)
+    sentence_words = list(set(sentence_words))
+    vocab.extend(sentence_words)
+    vocab = sorted(vocab)
+    words = {word: i for i, word in enumerate(vocab)}
+    embeddings = np.zeros((len(sentences), len(vocab)))
     for i, sentence in enumerate(sentences):
-        words = sentence.split()
-        for j, word in enumerate(words):
-            words[j] = clean_string(word)
-            if words[j] in vocab:
-                word_idx = features.index(words[j])
-                embeddings[i][word_idx] += 1
-
-    return embeddings, sorted(features)
+        for word in sentence.split():
+            if word in words:
+                embeddings[i][words[word]] += 1
+    return embeddings, vocab
