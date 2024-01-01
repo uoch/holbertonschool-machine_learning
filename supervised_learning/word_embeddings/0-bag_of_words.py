@@ -16,15 +16,13 @@ def clean_sentence(sentences):
 def bag_of_words(sentences, vocab=None):
     """creates a bag of words embedding matrix"""
     if vocab is None:
-        vocab = []
-    sentence_words = clean_sentence(sentences)
-    sentence_words = list(set(sentence_words))
-    vocab.extend(sentence_words)
-    vocab = sorted(vocab)
-    words = {word: i for i, word in enumerate(vocab)}
+        vocab = sorted(set(clean_sentence(sentences)))
+    
     embeddings = np.zeros((len(sentences), len(vocab)))
-    for i, sentence in enumerate(sentences):
-        for word in sentence.split():
-            if word in words:
-                embeddings[i][words[word]] += 1
-    return embeddings.astype(int), vocab
+    cleaned_sentences = [clean_sentence([sentence]) for sentence in sentences]
+
+    for i, cleaned_sentence in enumerate(cleaned_sentences):
+        for word in cleaned_sentence:
+            if word in vocab:
+                embeddings[i, vocab.index(word)] += 1
+    return embeddings, vocab
