@@ -17,10 +17,8 @@ def bag_of_words(sentences, vocab=None):
     """creates a bag of words embedding matrix"""
     if vocab is None:
         vocab = sorted(set(clean_sentence(sentences)))
-    
     embeddings = np.zeros((len(sentences), len(vocab)))
     cleaned_sentences = [clean_sentence([sentence]) for sentence in sentences]
-
     for i, cleaned_sentence in enumerate(cleaned_sentences):
         for word in cleaned_sentence:
             if word in vocab:
