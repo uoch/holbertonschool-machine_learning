@@ -8,4 +8,4 @@ def tf_idf(sentences, vocab=None):
     """creates a TF-IDF embedding"""
     vectorizer = TfidfVectorizer(vocabulary=vocab)
     X = vectorizer.fit_transform(sentences)
-    return X.toarray(), vectorizer.get_feature_names_out()
+    return X.toarray(), vectorizer.get_feature_names()
