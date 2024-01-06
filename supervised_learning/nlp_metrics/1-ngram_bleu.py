@@ -31,7 +31,8 @@ def ngram_bleu(references, sentence, n):
     candidate_ngrams = [tuple(sentence[i:i + n])
                         for i in range(len(sentence) - (n - 1))]
     reference_ngrams = [tuple(ref[i:i + n])
-                        for ref in references for i in range(len(ref) - (n - 1))]
+                        for ref in references \
+                            for i in range(len(ref) - (n - 1))]
     precision = ngram_precision(candidate_ngrams, reference_ngrams)
 
     return BP * np.exp(np.log(precision))
