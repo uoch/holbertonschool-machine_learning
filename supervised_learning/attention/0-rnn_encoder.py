@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """attention"""
-import numpy as np
 import tensorflow as tf
 
 
