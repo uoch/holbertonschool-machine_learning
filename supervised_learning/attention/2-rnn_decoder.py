@@ -27,8 +27,8 @@ class RNNDecoder(tf.keras.layers.Layer):
         use embedding layer to create an embedding vector
         then pass the embedding vector to the GRU layer
         Returns: outputs, hidden"""
+        context, weights = self.attention(s_prev, hidden_states)
         x = self.embedding(x)
-        context, _ = self.attention(s_prev, hidden_states)
         x = tf.concat([tf.expand_dims(context, 1), x], axis=-1)
         outputs, hidden = self.gru(x)
         outputs = tf.reshape(outputs, (-1, outputs.shape[2]))
