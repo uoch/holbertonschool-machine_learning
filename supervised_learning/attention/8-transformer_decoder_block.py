@@ -38,16 +38,16 @@ class DecoderBlock(tf.keras.layers.Layer):
         attention, _ = self.mha1(x, x, x, look_ahead_mask)
         attention = self.dropout1(attention)
         # add and norm block
-        out1 = self.layer_norm1(attention + x)
+        out1 = self.layernorm1(attention + x)
         # multi-head attention block
         attention2, _ = self.mha2(out1, enc_output, enc_output, padding_mask)
         attention2 = self.dropout2(attention2)
         # add and norm block
-        out2 = self.layer_norm2(attention2 + out1)
+        out2 = self.layernorm2(attention2 + out1)
         # feed forward block
         ffn = self.dense_hidden(out2)
         ffn = self.dense_output(ffn)
         ffn = self.dropout3(ffn)
         # add and norm block
-        out3 = self.layer_norm3(ffn + out2)
+        out3 = self.layernorm3(ffn + out2)
         return out3
