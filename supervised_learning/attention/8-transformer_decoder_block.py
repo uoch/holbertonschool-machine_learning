@@ -8,24 +8,29 @@ class DecoderBlock(tf.keras.layers.Layer):
     """DecoderBlock class"""
 
     def __init__(self, dm, h, hidden, drop_rate=0.1):
-        """constructor"""
-        super(DecoderBlock, self).__init__()
+        """
+        Init the class
+        :param dm: The model depth
+        :param h: The number of heads
+        :param hidden: The number of hidden unit
+        :param drop_rate: The drop rate for dropout
+        """
+        super().__init__()
         self.mha1 = MultiHeadAttention(dm, h)
         self.mha2 = MultiHeadAttention(dm, h)
 
-        self.dense_hidden = tf.keras.layers.Dense(hidden, activation='relu')
-        self.dense_output = tf.keras.layers.Dense(dm)
+        self.dense_hidden = tf.keras.layers.Dense(
+            units=hidden, activation="relu"
+        )
+        self.dense_output = tf.keras.layers.Dense(units=dm)
+
+        self.layernorm1 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+        self.layernorm2 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+        self.layernorm3 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
 
         self.dropout1 = tf.keras.layers.Dropout(drop_rate)
         self.dropout2 = tf.keras.layers.Dropout(drop_rate)
         self.dropout3 = tf.keras.layers.Dropout(drop_rate)
-
-        self.layer_norm1 = tf.keras.layers.LayerNormalization(
-            epsilon=1e-6)
-        self.layer_norm2 = tf.keras.layers.LayerNormalization(
-            epsilon=1e-6)
-        self.layer_norm3 = tf.keras.layers.LayerNormalization(
-            epsilon=1e-6)
 
     def call(self, x, enc_output, training, look_ahead_mask, padding_mask):
         """call function"""
