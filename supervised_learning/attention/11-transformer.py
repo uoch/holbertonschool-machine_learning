@@ -17,7 +17,7 @@ class Transformer(tf.keras.Model):
                                max_seq_input, drop_rate)
         self.decoder = Decoder(N, dm, h, hidden, target_vocab,
                                max_seq_target, drop_rate)
-        self.final_layer = tf.keras.layers.Dense(target_vocab)
+        self.linear = tf.keras.layers.Dense(target_vocab)
 
     def call(self, inputs, target, training, encoder_mask,
              look_ahead_mask, decoder_mask):
@@ -26,5 +26,5 @@ class Transformer(tf.keras.Model):
         # enc_output will be input to decoder
         dec_output = self.decoder(target, enc_output, training,
                                   look_ahead_mask, decoder_mask)
-        final_output = self.final_layer(dec_output)
+        final_output = self.linear(dec_output)
         return final_output
