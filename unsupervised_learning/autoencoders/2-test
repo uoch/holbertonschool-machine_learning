@@ -1,0 +1,21 @@
+InputLayer
+[(None, 784)]
+Dense
+relu
+(None, 784)
+(None, 512)
+Dense
+relu
+(None, 512)
+(None, 256)
+Dense
+linear
+(None, 256)
+(None, 2)
+Dense
+linear
+(None, 256)
+(None, 2)
+Lambda
+[(None, 2), (None, 2)]
+(None, 2)

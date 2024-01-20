@@ -1,0 +1,3 @@
+opencv-python
+numpy
+# Add other required packages here, if any

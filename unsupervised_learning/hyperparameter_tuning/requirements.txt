@@ -1,0 +1,4 @@
+matplotlib==3.5.1 
+scipy
+GPy==1.0.8
+GPyOpt==1.2.1

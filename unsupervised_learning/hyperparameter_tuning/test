@@ -1,0 +1,3 @@
+docker cp 6-bayes_opt.py tensorflow/tensorflow:/home/uoch/holbertonschool-machine_learning/unsupervised_learning/hyperparameter_tuning/6-bayes_opt.py
+docker cp 6-bayes_opt.py gpy_image:/home/uoch/holbertonschool-machine_learning/unsupervised_learning/hyperparameter_tuning/6-bayes_opt.py
+
