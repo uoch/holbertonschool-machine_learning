@@ -1,1 +1,0 @@
-## Optomization hyperparameters
