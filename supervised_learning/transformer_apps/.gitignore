@@ -1,139 +1,71 @@
-# .gitignore
-__pycache__/
-main.py
-push.sh
-data/
-logs/
-*.pkl
-*.h5
-
-../../math/advanced_linear_algebra/__pycache__/
-../../math/advanced_linear_algebra/main.py
-../../math/advanced_linear_algebra/main/
-../../math/advanced_linear_algebra/push.sh
-../../math/bayesian_prob/__pycache__/
-../../math/bayesian_prob/main.py
-../../math/bayesian_prob/main/
-../../math/bayesian_prob/push.sh
-../../math/multivariate_prob/__pycache__/
-../../math/multivariate_prob/main.py
-../../math/multivariate_prob/main/
-../../math/multivariate_prob/push.sh
-../RNNs/__pycache__/
-../RNNs/main.py
-../RNNs/main/
-../RNNs/push.sh
-../attention/1-test
-../attention/__pycache__/
-../attention/main.py
-../attention/main/
-../attention/push.sh
-../neural_style_transfer/__pycache__/
-../neural_style_transfer/best_image.pkl
-../neural_style_transfer/eBook - How to Build a Career in AI.pdf
-../neural_style_transfer/golden_gate.jpg
-../neural_style_transfer/luffy.jpg
-../neural_style_transfer/main.py
-../neural_style_transfer/main/
-../neural_style_transfer/model.h5
-../neural_style_transfer/nasa.jpg
-../neural_style_transfer/push.sh
-../neural_style_transfer/starry_night.jpg
-../neural_style_transfer/thameur.jpg
-../neural_style_transfer/thameur_luffy.jpg
-../neural_style_transfer/vgg_base_model.h5
-../nlp_metrics/__pycache__/
-../nlp_metrics/main.py
-../nlp_metrics/push.sh
-../object_detection/0-transfer.py
-../object_detection/1-yoloo.py
-../object_detection/__pycache__/
-../object_detection/acces_camera.py
-../object_detection/cifar10_data.npz
-../object_detection/data/
-../object_detection/detections/
-../object_detection/main/
-../object_detection/minn.py
-../object_detection/push.sh
-../object_detection/try.py
-../time_series/__pycache__/
-../time_series/bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv
-../time_series/data/
-../time_series/downlawd.py
-../time_series/downloaded_file.ext
-../time_series/downloaded_file.pdf
-../time_series/extrct.py
-../time_series/main.py
-../time_series/main/
-../time_series/push.sh
-../time_series/rr
-../time_series/steps
-../time_series/untitled2.py
-../time_series/www-efset-org-cert-wwiF8A.pdf
-../transfer_learning/.vscode/
-../transfer_learning/0-main.py
-../transfer_learning/__pycache__/
-../transfer_learning/augmentation.py
-../transfer_learning/build_first_model.py
-../transfer_learning/cifar10_data.npz
-../transfer_learning/cifar10_needmore_training_2.h5
-../transfer_learning/cifar10_needmore_training_4.h5
-../transfer_learning/cifar10_needmore_trainning.h5
-../transfer_learning/cifar10_withsinexp.h5
-../transfer_learning/dfg.py
-../transfer_learning/kaggel.py
-../transfer_learning/load.py
-../transfer_learning/logs/
-../transfer_learning/new.py
-../transfer_learning/objectf_model.py
-../transfer_learning/push.sh
-../transfer_learning/save_data.py
-../transfer_learning/test.py
-../transfer_learning/try.py
-../word_embeddings/__pycache__/
-../word_embeddings/main.py
-../word_embeddings/main/
-../word_embeddings/push.sh
-../../test
-../../unsupervised_learning/README.md
-../../unsupervised_learning/autoencoders/1-main.py
-../../unsupervised_learning/autoencoders/1-test
-../../unsupervised_learning/autoencoders/2-test
-../../unsupervised_learning/autoencoders/3-test
-../../unsupervised_learning/autoencoders/__pycache__/
-../../unsupervised_learning/autoencoders/main.py
-../../unsupervised_learning/autoencoders/main/
-../../unsupervised_learning/autoencoders/push.sh
-../../unsupervised_learning/autoencoders/try.py
-../../unsupervised_learning/autoencoders/vae_.py
-../../unsupervised_learning/clustering/__pycache__/
-../../unsupervised_learning/clustering/main.py
-../../unsupervised_learning/clustering/main/
-../../unsupervised_learning/clustering/push.sh
-../../unsupervised_learning/dimensionality_reduction/1-test
-../../unsupervised_learning/dimensionality_reduction/8-tsne.py
-../../unsupervised_learning/dimensionality_reduction/MNIST.npz
-../../unsupervised_learning/dimensionality_reduction/__pycache__/
-../../unsupervised_learning/dimensionality_reduction/main.py
-../../unsupervised_learning/dimensionality_reduction/main/
-../../unsupervised_learning/dimensionality_reduction/mnist2500_X.txt
-../../unsupervised_learning/dimensionality_reduction/mnist2500_labels.txt
-../../unsupervised_learning/dimensionality_reduction/push.sh
-../../unsupervised_learning/dimensionality_reduction/try.py
-../../unsupervised_learning/hmm/__pycache__/
-../../unsupervised_learning/hmm/farward.ipynb
-../../unsupervised_learning/hmm/main.py
-../../unsupervised_learning/hmm/push.sh
-../../unsupervised_learning/hmm/try.ipynb
-../../unsupervised_learning/hyperparameter_tuning/Dockerfile
-../../unsupervised_learning/hyperparameter_tuning/__pycache__/
-../../unsupervised_learning/hyperparameter_tuning/cifar10_data.npz
-../../unsupervised_learning/hyperparameter_tuning/data/
-../../unsupervised_learning/hyperparameter_tuning/gpy_notebook/
-../../unsupervised_learning/hyperparameter_tuning/logs/
-../../unsupervised_learning/hyperparameter_tuning/main.py
-../../unsupervised_learning/hyperparameter_tuning/main/
-../../unsupervised_learning/hyperparameter_tuning/push.sh
-../../unsupervised_learning/hyperparameter_tuning/requirements.txt
-../../unsupervised_learning/hyperparameter_tuning/test
-../../unsupervised_learning/push.sh
+        ../../math/advanced_linear_algebra/main/
+        ../../math/bayesian_prob/main/
+        ../../math/multivariate_prob/main/
+        ../RNNs/main/
+        ../attention/1-test
+        ../attention/main/
+        ../neural_style_transfer/eBook - How to Build a Career in AI.pdf
+        ../neural_style_transfer/golden_gate.jpg
+        ../neural_style_transfer/luffy.jpg
+        ../neural_style_transfer/main/
+        ../neural_style_transfer/nasa.jpg
+        ../neural_style_transfer/starry_night.jpg
+        ../neural_style_transfer/thameur.jpg
+        ../neural_style_transfer/thameur_luffy.jpg
+        ../object_detection/0-transfer.py
+        ../object_detection/1-yoloo.py
+        ../object_detection/acces_camera.py
+        ../object_detection/cifar10_data.npz
+        ../object_detection/detections/
+        ../object_detection/main/
+        ../object_detection/minn.py
+        ../object_detection/try.py
+        ../time_series/bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv
+        ../time_series/downlawd.py
+        ../time_series/downloaded_file.ext
+        ../time_series/downloaded_file.pdf
+        ../time_series/extrct.py
+        ../time_series/main/
+        ../time_series/rr
+        ../time_series/steps
+        ../time_series/untitled2.py
+        ../time_series/www-efset-org-cert-wwiF8A.pdf
+        ../transfer_learning/.vscode/
+        ../transfer_learning/0-main.py
+        ../transfer_learning/augmentation.py
+        ../transfer_learning/build_first_model.py
+        ../transfer_learning/cifar10_data.npz
+        ../transfer_learning/dfg.py
+        ../transfer_learning/kaggel.py
+        ../transfer_learning/load.py
+        ../transfer_learning/new.py
+        ../transfer_learning/objectf_model.py
+        ../transfer_learning/save_data.py
+        ../transfer_learning/test.py
+        ../transfer_learning/try.py
+        ../word_embeddings/main/
+        ../../test
+        ../../unsupervised_learning/README.md
+        ../../unsupervised_learning/autoencoders/1-main.py
+        ../../unsupervised_learning/autoencoders/1-test
+        ../../unsupervised_learning/autoencoders/2-test
+        ../../unsupervised_learning/autoencoders/3-test
+        ../../unsupervised_learning/autoencoders/main/
+        ../../unsupervised_learning/autoencoders/try.py
+        ../../unsupervised_learning/autoencoders/vae_.py
+        ../../unsupervised_learning/clustering/main/
+        ../../unsupervised_learning/dimensionality_reduction/1-test
+        ../../unsupervised_learning/dimensionality_reduction/8-tsne.py
+        ../../unsupervised_learning/dimensionality_reduction/MNIST.npz
+        ../../unsupervised_learning/dimensionality_reduction/main/
+        ../../unsupervised_learning/dimensionality_reduction/mnist2500_X.txt
+        ../../unsupervised_learning/dimensionality_reduction/mnist2500_labels.txt
+        ../../unsupervised_learning/dimensionality_reduction/try.py
+        ../../unsupervised_learning/hmm/farward.ipynb
+        ../../unsupervised_learning/hmm/try.ipynb
+        ../../unsupervised_learning/hyperparameter_tuning/Dockerfile
+        ../../unsupervised_learning/hyperparameter_tuning/cifar10_data.npz
+        ../../unsupervised_learning/hyperparameter_tuning/gpy_notebook/
+        ../../unsupervised_learning/hyperparameter_tuning/main/
+        ../../unsupervised_learning/hyperparameter_tuning/requirements.txt
+        ../../unsupervised_learning/hyperparameter_tuning/test
