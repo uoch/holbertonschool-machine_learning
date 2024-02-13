@@ -36,7 +36,7 @@ def train(env, Q,
             state = new_state
             if done:
                 break
-            
+
         epsilon = (min_epsilon + (epsilon - min_epsilon) *
                    np.exp(-epsilon_decay * ep))
         rewards.append(total_rewards)
