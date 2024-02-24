@@ -25,12 +25,6 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install -r reinforcement_learning/deep_q_learning/requirements.txt
-    - name: Download ROMs
-      run: |
-        python
-        import tensorflow as tf
-        from keras import __version__
-        tf.keras.__version__ = __version__
     - name: Run script
       run: |
         python reinforcement_learning/deep_q_learning/train.py
