@@ -1,0 +1,8 @@
+# Add dependencies
+keras==2.13.1
+Pillow
+h5py
+keras-rl2==1.0.4
+gymnasium[atari]
+gymnasium[accept-rom-license]
+tensorflow==2.13.0
