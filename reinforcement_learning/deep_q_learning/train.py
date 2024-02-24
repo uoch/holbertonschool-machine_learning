@@ -104,7 +104,9 @@ def save_load_weights(dqn, weights_filename):
 
 if __name__ == "__main__":
     log_dir = 'dqn_ALE'
-
+    import tensorflow as tf
+    from keras import __version__
+    tf.keras.__version__ = __version__
     # Create the directory if it doesn't exist
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
