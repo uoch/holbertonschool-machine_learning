@@ -1,8 +1,6 @@
 import os
 import numpy as np
 from PIL import Image
-from IPython import display
-from PIL import Image
 import gymnasium as gym
 from gymnasium import Wrapper
 from keras.models import Sequential, Model
