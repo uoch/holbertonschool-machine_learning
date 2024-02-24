@@ -3,9 +3,9 @@ import numpy as np
 from PIL import Image
 import gymnasium as gym
 from gymnasium import Wrapper
-from keras.models import Sequential, Model
-from keras.keras.layers import Dense, Activation, Flatten, Convolution2D, Permute, Input
-from keras.keras.optimizers.legacy import Adam
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.keras.layers import Dense, Activation, Flatten, Convolution2D, Permute, Input
+from tensorflow.keras.keras.optimizers.legacy import Adam
 from rl.agents.dqn import DQNAgent
 from rl.policy import LinearAnnealedPolicy, BoltzmannQPolicy, EpsGreedyQPolicy
 from rl.memory import SequentialMemory
@@ -104,6 +104,9 @@ def save_load_weights(dqn, weights_filename):
 
 if __name__ == "__main__":
     log_dir = 'dqn_ALE'
+    import tensorflow as tf
+    from keras import __version__
+    tf.keras.__version__ = __version__
     # Create the directory if it doesn't exist
     if not os.path.exists(log_dir):
         os.makedirs(log_dir)
