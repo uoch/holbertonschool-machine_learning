@@ -25,8 +25,6 @@ jobs:
       run: |
         pip install --upgrade pip
         pip install -r reinforcement_learning/deep_q_learning/requirements.txt
-    - name: Reboot environment
-      run: sudo reboot
   
     - name: Run script
       run: |
