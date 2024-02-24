@@ -3,9 +3,9 @@ import numpy as np
 from PIL import Image
 import gymnasium as gym
 from gymnasium import Wrapper
-from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Flatten, Convolution2D, Permute, Input
-from keras.optimizers.legacy import Adam
+from tensorflow.keras.models import Sequential, Model
+from tensorflowkeras.keras.layers import Dense, Activation, Flatten, Convolution2D, Permute, Input
+from tensorflowkeras.keras.optimizers.legacy import Adam
 from rl.agents.dqn import DQNAgent
 from rl.policy import LinearAnnealedPolicy, BoltzmannQPolicy, EpsGreedyQPolicy
 from rl.memory import SequentialMemory
