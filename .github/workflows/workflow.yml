@@ -1,0 +1,42 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r reinforcement_learning/deep_q_learning/requirements.txt
+    - name: Reboot environment
+      run: sudo reboot
+  
+    - name: Run script
+      run: |
+        python reinforcement_learning/deep_q_learning/train.py
+
+    - name: Wait for 4 hours
+      run: sleep 5400
+
+    - name: Upload model
+      uses: actions/upload-artifact@v2
+      with:
+        name: trained_model
+        path: dqn_ALE_weights.h5f  # Update with the path of your saved model file
