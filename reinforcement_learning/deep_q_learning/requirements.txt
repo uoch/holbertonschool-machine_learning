@@ -5,4 +5,4 @@ h5py
 keras-rl2==1.0.4
 gymnasium[atari]
 gymnasium[accept-rom-license]
-tensorflow==2.13.0
+tensorflow==2.15.0
