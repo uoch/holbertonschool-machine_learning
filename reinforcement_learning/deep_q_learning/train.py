@@ -5,7 +5,7 @@ import gymnasium as gym
 from gymnasium import Wrapper
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.keras.layers import Dense, Activation, Flatten, Convolution2D, Permute, Input
-from tensorflow.keras.keras.optimizers.legacy import Adam
+from tensorflow.keras.optimizers.legacy import Adam
 from rl.agents.dqn import DQNAgent
 from rl.policy import LinearAnnealedPolicy, BoltzmannQPolicy, EpsGreedyQPolicy
 from rl.memory import SequentialMemory
