@@ -32,6 +32,7 @@ def get_user_location(api_url):
 
 
 if __name__ == "__main__":
+    """main"""
     if len(sys.argv) != 2:
         print("Usage: python script.py <user_api_url>")
         sys.exit(1)
