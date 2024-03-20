@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""api module"""
 import requests
 import sys
 import time
