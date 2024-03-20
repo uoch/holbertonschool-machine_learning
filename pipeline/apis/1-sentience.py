@@ -14,7 +14,7 @@ def sentientPlanets():
         for planet in result:
             classification = planet["classification"]
             designation = planet["designation"]
-            if classification in ["sentient",] or designation in ["sentient"]:
+            if classification in ["sentient"] or designation in ["sentient"]:
                 url2 = planet["homeworld"]
                 if url2 is not None:
                     response2 = rq.get(url2)
