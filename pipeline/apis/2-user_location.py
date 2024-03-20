@@ -25,7 +25,7 @@ def get_user_location(api_url):
             else:
                 print("Location not available")
         else:
-            print(f"Unexpected status code: {response.status_code}")
+            print("Unexpected status code: {}".format(response.status_code))
 
     except requests.RequestException as e:
         print(f"Error: {e}")
