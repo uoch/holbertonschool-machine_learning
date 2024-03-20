@@ -16,7 +16,7 @@ def get_user_location(api_url):
             current_time = int(time.time())
             reset_in_seconds = reset_time - current_time
             reset_in_minutes = reset_in_seconds // 60
-            print(f"Reset in {reset_in_minutes} min")
+            print("Reset in {} min".format(reset_in_minutes))
         elif response.status_code == 200:
             user_data = response.json()
             location = user_data.get("location")
