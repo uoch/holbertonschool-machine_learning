@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
+"""api module"""
 import requests as rq
 import json
-"""api module"""
 
 
 def availableShips(passengerCount):
