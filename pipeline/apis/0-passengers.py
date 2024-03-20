@@ -5,6 +5,7 @@ import json
 
 
 def availableShips(passengerCount):
+    """count the number of passengers in the starships"""
     url = "https://swapi-api.hbtn.io/api/starships/"
     ships = []
     while url is not None:
