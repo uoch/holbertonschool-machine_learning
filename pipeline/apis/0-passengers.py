@@ -14,7 +14,9 @@ def availableShips(passengerCount):
         result = data["results"]
         for ship in result:
             passengers = ship["passengers"]
-            if passengers.isnumeric() and int(passengers) >= passengerCount:
-                ships.append(ship["name"])
+            if passengers not in ["n/a", "unknown"]:
+                passengers = passengers.replace(',', '')  # remove commas
+                if int(passengers) > passengerCount:
+                    ships.append(ship["name"])
         url = data["next"]
     return ships
