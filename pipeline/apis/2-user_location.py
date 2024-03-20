@@ -28,7 +28,7 @@ def get_user_location(api_url):
             print("Unexpected status code: {}".format(response.status_code))
 
     except requests.RequestException as e:
-        print(f"Error: {e}")
+        print("Error: {}".format(e))
 
 
 if __name__ == "__main__":
