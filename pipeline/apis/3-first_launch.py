@@ -1,32 +1,31 @@
 #!/usr/bin/env python3
 """api module"""
 import requests
-import sys
-import time
 
 
+if __name__ == '__main__':
+    launch_url = 'https://api.spacexdata.com/v4/launches/upcoming'
+    rocker_url = 'https://api.spacexdata.com/v4/rockets'
+    launchpad_url = 'https://api.spacexdata.com/v4/launchpads'
 
+    response = requests.get(launch_url).json()
 
-
-
-if __name__=='__main__':
-    url = "https://api.spacexdata.com/v4/launches"
-    response = requests.get(url)
-    data = response.json()
-    rockets = {}
-    for launch in data:
-        rocket_id = launch["rocket"]
-        rocket_url = "https://api.spacexdata.com/v4/rockets/" + rocket_id
-        rocket_response = requests.get(rocket_url)
-        rocket_data = rocket_response.json()
-        rocket_name = rocket_data["name"]
-        if rocket_name in rockets:
-            rockets[rocket_name] += 1
-        else:
-            rockets[rocket_name] = 1
-    sorted_rockets = sorted(rockets.items(), key=lambda x: x[1], reverse=True)
-    for rocket in sorted_rockets:
-        print("{}: {}".format(rocket[0], rocket[1]))
-    sys.stdout.flush()
-    time.sleep(10)
-    sys.exit(0)
+    dates = [x["date_unix"] for x in response]
+    dates.sort()
+    next_launch = [x for x in response if x["date_unix"] == dates[0]]
+    next_launch_name = next_launch[0]["name"]
+    date_launch = next_launch[0]["date_local"]
+    rocker_id = next_launch[0]["rocket"]
+    launchpad_id = next_launch[0]["launchpad"]
+    rocket_name = [x["name"] for x in requests.get(
+        rocker_url).json() if x["id"] == rocker_id][0]
+    launchpad_name = [x["name"] for x in requests.get(
+        launchpad_url).json() if x["id"] == launchpad_id][0]
+    launchpad_locality = [x["locality"] for x in requests.get(
+        launchpad_url).json() if x["id"] == launchpad_id][0]
+    print(
+        "{} {} {} {} ({})".format(next_launch_name,
+                                  date_launch,
+                                  rocket_name,
+                                  launchpad_name,
+                                  launchpad_locality))
