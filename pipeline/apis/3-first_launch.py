@@ -4,9 +4,9 @@ import requests
 
 if __name__ == '__main__':
     base_url = 'https://api.spacexdata.com/v4'
-    launch_url = f'{base_url}/launches/upcoming'
-    rockets_url = f'{base_url}/rockets'
-    launchpads_url = f'{base_url}/launchpads'
+    launch_url = '{}/launches/upcoming'.format(base_url)
+    rockets_url = '{}/rockets'.format(base_url)
+    launchpads_url = '{}/launchpads'.format(base_url)
 
     response_launches = requests.get(launch_url).json()
     response_rockets = requests.get(rockets_url).json()
