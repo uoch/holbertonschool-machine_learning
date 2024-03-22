@@ -27,9 +27,14 @@ if __name__ == '__main__':
     lpad_locality = launchpad["locality"] if launchpad else "Unknown Locality"
 
     print(
-        "{} ({}) {} - {} ({})".format(next_launch_name,
-                                      date_launch,
-                                      rocket_name,
-                                      launchpad_name,
-                                      lpad_locality)
+        "Next launch: "
+        + " ("
+        + date_launch
+        + ") "
+        + rocket_name
+        + " - "
+        + launchpad_name
+        + " ("
+        + lpad_locality
+        + ")"
     )
