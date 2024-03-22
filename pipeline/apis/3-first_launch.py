@@ -2,30 +2,35 @@
 """api module"""
 import requests
 
-
 if __name__ == '__main__':
-    launch_url = 'https://api.spacexdata.com/v4/launches/upcoming'
-    rocker_url = 'https://api.spacexdata.com/v4/rockets'
-    launchpad_url = 'https://api.spacexdata.com/v4/launchpads'
+    # Define the API endpoints
+    base_url = 'https://api.spacexdata.com/v4'
+    launch_url = f'{base_url}/launches/upcoming'
+    rockets_url = f'{base_url}/rockets'
+    launchpads_url = f'{base_url}/launchpads'
 
-    response = requests.get(launch_url).json()
+    # Fetch data for upcoming launches, rockets, and launchpads
+    response_launches = requests.get(launch_url).json()
+    response_rockets = requests.get(rockets_url).json()
+    response_launchpads = requests.get(launchpads_url).json()
 
-    dates = [x["date_unix"] for x in response]
-    dates.sort()
-    next_launch = [x for x in response if x["date_unix"] == dates[0]]
-    next_launch_name = next_launch[0]["name"]
-    date_launch = next_launch[0]["date_local"]
-    rocker_id = next_launch[0]["rocket"]
-    launchpad_id = next_launch[0]["launchpad"]
-    rocket_name = [x["name"] for x in requests.get(
-        rocker_url).json() if x["id"] == rocker_id][0]
-    launchpad_name = [x["name"] for x in requests.get(
-        launchpad_url).json() if x["id"] == launchpad_id][0]
-    launchpad_locality = [x["locality"] for x in requests.get(
-        launchpad_url).json() if x["id"] == launchpad_id][0]
+    # Extract data for the next launch
+    next_launch = min(response_launches, key=lambda x: x['date_unix'])
+    next_launch_name = next_launch["name"]
+    date_launch = next_launch["date_local"]
+    rocket_id = next_launch["rocket"]
+    launchpad_id = next_launch["launchpad"]
+
+    # Retrieve rocket and launchpad details using dictionary lookup
+    rocket = next((r for r in response_rockets if r['id'] == rocket_id), None)
+    launchpad = next((lp for lp in response_launchpads if lp['id'] == launchpad_id), None)
+
+    # Extract relevant information
+    rocket_name = rocket["name"] if rocket else "Unknown Rocket"
+    launchpad_name = launchpad["name"] if launchpad else "Unknown Launchpad"
+    launchpad_locality = launchpad["locality"] if launchpad else "Unknown Locality"
+
+    # Print the formatted information
     print(
-        "{} {} {} {} ({})".format(next_launch_name,
-                                  date_launch,
-                                  rocket_name,
-                                  launchpad_name,
-                                  launchpad_locality))
+        f"{next_launch_name} {date_launch} {rocket_name} {launchpad_name} ({launchpad_locality})"
+    )
