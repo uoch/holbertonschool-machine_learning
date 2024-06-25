@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 
 class Simple_GAN(keras.Model):
+    """Simple GAN implementation."""
 
     def __init__(self, generator, discriminator,
                  latent_generator, real_examples,
@@ -31,7 +32,9 @@ class Simple_GAN(keras.Model):
         # define the generator loss and optimizer:
         self.generator.loss = lambda x: tf.keras.losses.MeanSquaredError()(x, tf.ones(x.shape))
         self.generator.optimizer = keras.optimizers.Adam(
-            learning_rate=self.learning_rate, beta_1=self.beta_1, beta_2=self.beta_2)
+            learning_rate=self.learning_rate,
+            beta_1=self.beta_1,
+            beta_2=self.beta_2)
         self.generator.compile(
             optimizer=generator.optimizer, loss=generator.loss)
 
