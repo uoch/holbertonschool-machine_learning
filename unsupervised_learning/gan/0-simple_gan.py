@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""GANs for generating images of handwritten digits."""
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -7,7 +8,11 @@ import matplotlib.pyplot as plt
 
 class Simple_GAN(keras.Model):
 
-    def __init__(self, generator, discriminator, latent_generator, real_examples, batch_size=200, disc_iter=2, learning_rate=.005):
+    def __init__(self, generator, discriminator,
+                 latent_generator, real_examples,
+                 batch_size=200, disc_iter=2,
+                 learning_rate=.005):
+        """Initialize the GAN."""
         # run the __init__ of keras.Model first.
         super().__init__()
         self.latent_generator = latent_generator
@@ -31,22 +36,27 @@ class Simple_GAN(keras.Model):
             optimizer=generator.optimizer, loss=generator.loss)
 
         # define the discriminator loss and optimizer:
-        self.discriminator.loss = lambda x, y: tf.keras.losses.MeanSquaredError()(
-            x, tf.ones(x.shape)) + tf.keras.losses.MeanSquaredError()(y, -1*tf.ones(y.shape))
+        self.discriminator.loss = \
+            lambda x, y: tf.keras.losses.MeanSquaredError()(
+                x, tf.ones(x.shape)) + tf.keras.losses.MeanSquaredError()(y, -1*tf.ones(y.shape))
         self.discriminator.optimizer = keras.optimizers.Adam(
-            learning_rate=self.learning_rate, beta_1=self.beta_1, beta_2=self.beta_2)
+            learning_rate=self.learning_rate,
+            beta_1=self.beta_1,
+            beta_2=self.beta_2)
         self.discriminator.compile(
             optimizer=discriminator.optimizer, loss=discriminator.loss)
 
     # generator of real samples of size batch_size
 
     def get_fake_sample(self, size=None, training=False):
+        """Generate fake samples."""
         if not size:
             size = self.batch_size
         return self.generator(self.latent_generator(size), training=training)
 
     # generator of fake samples of size batch_size
     def get_real_sample(self, size=None):
+        """Get real samples."""
         if not size:
             size = self.batch_size
         sorted_indices = tf.range(tf.shape(self.real_examples)[0])
@@ -55,6 +65,7 @@ class Simple_GAN(keras.Model):
 
     # overloading train_step()
     def train_step(self, useless_argument):
+        """Train the GAN."""
         # Training the discriminator
         for _ in range(self.disc_iter):
             with tf.GradientTape() as tape:
